@@ -1,3 +1,6 @@
+# Other
+*.bat
+
 # Built application files
 *.apk
 *.ap_
