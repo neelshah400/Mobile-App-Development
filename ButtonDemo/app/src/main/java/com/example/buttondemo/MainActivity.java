@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClickButton1(View view){
+    public void onClickButton1(View view) {
         int rand = (int)(Math.random() * 2) + 1;
         if(rand == 1)
             button1.setTextColor(Color.BLUE);
@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
             button1.setTextColor(Color.RED);
     }
 
-    public void onClickButton2(View view){
+    public void onClickButton2(View view) {
         button2.setTextColor(Color.GREEN);
     }
 
-    public void onClickButton3(View view){
+    public void onClickButton3(View view) {
         String temp = (String)button1.getText();
         button1.setText(button2.getText());
         button2.setText(temp);
