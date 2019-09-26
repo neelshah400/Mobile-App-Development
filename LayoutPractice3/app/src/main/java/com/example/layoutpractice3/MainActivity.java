@@ -1,4 +1,4 @@
-package com.example.layoutproject3;
+package com.example.layoutpractice3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -58,3 +58,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

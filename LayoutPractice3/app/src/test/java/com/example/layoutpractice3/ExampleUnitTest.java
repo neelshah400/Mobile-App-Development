@@ -1,4 +1,4 @@
-package com.example.layoutproject3;
+package com.example.layoutpractice3;
 
 import org.junit.Test;
 
