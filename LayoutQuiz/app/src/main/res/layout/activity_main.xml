@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/id_button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:text="Click Here" />
+
+    <TextView
+        android:id="@+id/id_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_button1"
+        android:layout_alignEnd="@+id/id_button1"
+        android:layout_alignRight="@+id/id_button1"
+        android:text="Not Clicked" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_text1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Not Clicked" />
+
+        <Button
+            android:id="@+id/id_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click Here" />
+
+    </LinearLayout>
+
+</RelativeLayout>
