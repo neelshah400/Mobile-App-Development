@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/id_text11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Number of punctuation marks"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_text12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This sentence, which I wrote, has three punctuation marks." />
+
+    <TextView
+        android:id="@+id/id_text13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placeholder" />
+
+    <TextView
+        android:id="@+id/id_text21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Number of sentences"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_text22"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is my first sentence. This is my second sentence. This is my third sentence. This is my fourth sentence." />
+
+    <TextView
+        android:id="@+id/id_text23"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placeholder" />
+
+    <TextView
+        android:id="@+id/id_text31"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Number of words"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_text32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This sentence has five words." />
+
+    <TextView
+        android:id="@+id/id_text33"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placeholder" />
+
+    <TextView
+        android:id="@+id/id_text41"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Average number of words per sentence"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_text42"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur elit turpis, lobortis non lectus tempor, convallis tincidunt nulla. Nulla a tortor quam. Morbi feugiat convallis mi, eget tristique arcu commodo sit amet. Sed interdum posuere orci vitae accumsan. Vivamus eleifend orci ac mauris hendrerit tincidunt. Cras at quam sollicitudin ipsum mattis finibus eu nec felis. Proin malesuada, neque sed posuere tincidunt, ante ante sollicitudin nisl, vitae aliquam nunc magna a nisl. Suspendisse semper vel dolor sed tempor. Ut non porttitor sapien. Ut aliquam quam in porta luctus." />
+
+    <TextView
+        android:id="@+id/id_text43"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placeholder" />
+
+    <TextView
+        android:id="@+id/id_text51"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Average number of words per sentence"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_text52"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Number of words with more than one vowel" />
+
+    <TextView
+        android:id="@+id/id_text53"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Placeholder" />
+</LinearLayout>
