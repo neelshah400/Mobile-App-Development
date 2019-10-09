@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textOutput = findViewById(R.id.id_textOutput);
         textLog = findViewById(R.id.id_textLog);
 
-
         button0 = findViewById(R.id.id_button0);
         button1 = findViewById(R.id.id_button1);
         button2 = findViewById(R.id.id_button2);
@@ -63,33 +62,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v) {
-        Button btn = (Button)v;
-        String str = (String)btn.getText();
-        if("0123456789".contains(str))
+        Button btn = (Button) v;
+        String str = (String) btn.getText();
+        if ("0123456789".contains(str))
             textOutput.append(str);
-        if("+-*/".contains(str))
+        if ("+-*/".contains(str))
             textOutput.append(str);
-        if("=".contains(str)) {
+        if ("=".contains(str)) {
             String exp = "" + textOutput.getText();
             StringTokenizer tkn = new StringTokenizer(exp, "+-*/", true);
             ArrayList<String> list = new ArrayList<String>();
-            while(tkn.hasMoreTokens())
+            while (tkn.hasMoreTokens())
                 list.add(tkn.nextToken());
             textLog.setText("" + list);
-            int plus = list.indexOf("+");
-            int minus = list.indexOf("-");
-            int times = list.indexOf("*");
-            int divide = list.indexOf("/");
-            int index = -1;
-            int value = 0;
-            if(times != -1 || divide != -1) {
-                index = times < divide ? times : divide;
+            try {
+                while (list.size() > 1) {
+                    int plus = list.indexOf("+");
+                    int minus = list.indexOf("-");
+                    int times = list.indexOf("*");
+                    int divide = list.indexOf("/");
+                    int index = -1;
+                    if (times != -1 || divide != -1) {
+                        index = times == -1 ? divide : times;
+                        double first = Double.parseDouble(list.get(index - 1));
+                        double second = Double.parseDouble(list.get(index + 1));
+                        double value = 0.0;
+                        if (list.get(index).equals("*"))
+                            value = first * second;
+                        else
+                            value = first / second;
+                        if ((double) ((int) value) == value)
+                            list.set(index - 1, "" + (int) value);
+                        else
+                            list.set(index - 1, "" + value);
+                        list.remove(index + 1);
+                        list.remove(index);
+                    } else if (plus != -1 || minus != -1) {
+                        index = plus == -1 ? minus : plus;
+                        double first = Double.parseDouble(list.get(index - 1));
+                        double second = Double.parseDouble(list.get(index + 1));
+                        double value = 0.0;
+                        if (list.get(index).equals("+"))
+                            value = first + second;
+                        else
+                            value = first - second;
+                        if ((double) ((int) value) == value)
+                            list.set(index - 1, "" + (int) value);
+                        else
+                            list.set(index - 1, "" + value);
+                        list.remove(index + 1);
+                        list.remove(index);
+                    }
+                }
+            } catch (Exception e) {
+                list = new ArrayList<String>();
+                list.add("Error");
             }
-            else {
-
-            }
+            textOutput.setText(list.get(0));
         }
-        if("C".contains(str))
+        if ("C".contains(str))
             textOutput.setText("");
 
     }
