@@ -3,9 +3,9 @@ package com.example.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    HorizontalScrollView scroll1;
     TextView textOutput, textLog;
     Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear;
 
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        scroll1 = findViewById(R.id.id_scroll1);
 
         textOutput = findViewById(R.id.id_textOutput);
         textLog = findViewById(R.id.id_textLog);
@@ -62,10 +65,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v) {
+
         Button btn = (Button) v;
         String str = (String) btn.getText();
-        if ("0123456789".contains(str))
-            textOutput.append(str);
+        if ("0123456789".contains(str)) {
+            /*if(textOutput.getText().length() > 1 && ("" + textOutput.getText().charAt(0)).equals("0"))
+                textOutput.setText(str);
+            else*/
+                textOutput.append(str);
+        }
+        if(!"=".contains(str))
+            scroll1.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+        else
+            scroll1.fullScroll(HorizontalScrollView.FOCUS_LEFT);
         if ("+-*/".contains(str))
             textOutput.append(str);
         if ("=".contains(str)) {
@@ -74,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ArrayList<String> list = new ArrayList<String>();
             while (tkn.hasMoreTokens())
                 list.add(tkn.nextToken());
-            textLog.setText("" + list);
             try {
                 while (list.size() > 1) {
                     int plus = list.indexOf("+");
@@ -116,9 +127,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } catch (Exception e) {
                 list = new ArrayList<String>();
-                list.add("Error");
+                list.add("error");
             }
             textOutput.setText(list.get(0));
+            textLog.setText(exp + "\n        =" + textOutput.getText() + "\n\n" + textLog.getText());
         }
         if ("C".contains(str))
             textOutput.setText("");

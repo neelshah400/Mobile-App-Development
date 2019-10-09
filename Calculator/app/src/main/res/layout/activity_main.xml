@@ -4,15 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEE5F4"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/id_textOutput"
+    <HorizontalScrollView
+        android:id="@+id/id_scroll1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:textSize="60sp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/id_textOutput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end"
+            android:paddingLeft="60sp"
+            android:paddingTop="20sp"
+            android:paddingRight="60sp"
+            android:paddingBottom="20sp"
+            android:scrollHorizontally="true"
+            android:singleLine="false"
+            android:textSize="60sp" />
+    </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,31 +34,43 @@
 
         <Button
             android:id="@+id/id_button1"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1" />
+            android:padding="20sp"
+            android:text="1"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button2"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="2" />
+            android:padding="20sp"
+            android:text="2"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button3"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="3" />
+            android:padding="20sp"
+            android:text="3"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_buttonPlus"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="+" />
+            android:padding="20sp"
+            android:text="+"
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,31 +80,43 @@
 
         <Button
             android:id="@+id/id_button4"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="4" />
+            android:padding="20sp"
+            android:text="4"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button5"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="5" />
+            android:padding="20sp"
+            android:text="5"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button6"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="6" />
+            android:padding="20sp"
+            android:text="6"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_buttonMinus"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:padding="20sp"
+            android:text="-"
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,31 +126,43 @@
 
         <Button
             android:id="@+id/id_button7"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="7" />
+            android:padding="20sp"
+            android:text="7"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button8"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="8" />
+            android:padding="20sp"
+            android:text="8"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button9"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="9" />
+            android:padding="20sp"
+            android:text="9"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_buttonTimes"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="*" />
+            android:padding="20sp"
+            android:text="*"
+            android:textSize="30sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -123,36 +172,65 @@
 
         <Button
             android:id="@+id/id_buttonClear"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="C" />
+            android:padding="20sp"
+            android:text="C"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_button0"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0" />
+            android:padding="20sp"
+            android:text="0"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_buttonEquals"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="=" />
+            android:padding="20sp"
+            android:text="="
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/id_buttonDivide"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="/" />
+            android:padding="20sp"
+            android:text="/"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/id_textLog"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_textLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|left"
+                android:layout_weight="1"
+                android:padding="20sp"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
