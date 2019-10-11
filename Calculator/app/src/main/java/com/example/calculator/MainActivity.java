@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     HorizontalScrollView scroll1;
     TextView textOutput, textLog;
-    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear;
+    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear, buttonDot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonDivide = findViewById(R.id.id_buttonDivide);
         buttonEquals = findViewById(R.id.id_buttonEquals);
         buttonClear = findViewById(R.id.id_buttonClear);
+        buttonDot = findViewById(R.id.id_buttonDot);
 
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonDivide.setOnClickListener(this);
         buttonEquals.setOnClickListener(this);
         buttonClear.setOnClickListener(this);
+        buttonDot.setOnClickListener(this);
 
     }
 
@@ -68,18 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button btn = (Button) v;
         String str = (String) btn.getText();
-        if ("0123456789".contains(str)) {
-            /*if(textOutput.getText().length() > 1 && ("" + textOutput.getText().charAt(0)).equals("0"))
-                textOutput.setText(str);
-            else*/
-                textOutput.append(str);
+        if ("0123456789+-*/.".contains(str)) {
+            textOutput.append(str);
         }
-        if(!"=".contains(str))
+        if (!"=".contains(str))
             scroll1.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
         else
             scroll1.fullScroll(HorizontalScrollView.FOCUS_LEFT);
-        if ("+-*/".contains(str))
-            textOutput.append(str);
         if ("=".contains(str)) {
             String exp = "" + textOutput.getText();
             StringTokenizer tkn = new StringTokenizer(exp, "+-*/", true);
@@ -100,8 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         double value = 0.0;
                         if (list.get(index).equals("*"))
                             value = first * second;
-                        else
+                        else {
                             value = first / second;
+                            if (second == 0)
+                                throw new Exception("Divide by 0");
+                        }
                         if ((double) ((int) value) == value)
                             list.set(index - 1, "" + (int) value);
                         else
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             } catch (Exception e) {
                 list = new ArrayList<String>();
-                list.add("error");
+                list.add("Error");
             }
             textOutput.setText(list.get(0));
             textLog.setText(exp + "\n        =" + textOutput.getText() + "\n\n" + textLog.getText());
