@@ -3,6 +3,7 @@ package com.example.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -15,7 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     HorizontalScrollView scroll1;
     TextView textOutput, textLog;
-    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear, buttonDot;
+    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear, buttonDot, buttonPower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonEquals = findViewById(R.id.id_buttonEquals);
         buttonClear = findViewById(R.id.id_buttonClear);
         buttonDot = findViewById(R.id.id_buttonDot);
+        buttonPower = findViewById(R.id.id_buttonPower);
 
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonEquals.setOnClickListener(this);
         buttonClear.setOnClickListener(this);
         buttonDot.setOnClickListener(this);
+        buttonPower.setOnClickListener(this);
 
     }
 
@@ -70,16 +73,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button btn = (Button) v;
         String str = (String) btn.getText();
-        if ("0123456789+-*/.".contains(str)) {
+        if ("0123456789+-*/.^".contains(str))
             textOutput.append(str);
-        }
         if (!"=".contains(str))
             scroll1.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
         else
             scroll1.fullScroll(HorizontalScrollView.FOCUS_LEFT);
         if ("=".contains(str)) {
             String exp = "" + textOutput.getText();
-            StringTokenizer tkn = new StringTokenizer(exp, "+-*/", true);
+            StringTokenizer tkn = new StringTokenizer(exp, "+-*/^", true);
             ArrayList<String> list = new ArrayList<String>();
             while (tkn.hasMoreTokens())
                 list.add(tkn.nextToken());
@@ -89,12 +91,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     int minus = list.indexOf("-");
                     int times = list.indexOf("*");
                     int divide = list.indexOf("/");
+                    int power = list.indexOf("^");
+
                     int index = -1;
-                    if (times != -1 || divide != -1) {
-                        index = times == -1 ? divide : times;
-                        double first = Double.parseDouble(list.get(index - 1));
-                        double second = Double.parseDouble(list.get(index + 1));
-                        double value = 0.0;
+                    if (power != -1)
+                        index = power;
+                    else if (times != -1 || divide != -1) {
+                        if (times == -1)
+                            index = divide;
+                        else if (divide == -1)
+                            index = times;
+                        else
+                            index = times < divide ? times : divide;
+                    } else if (plus != -1 || minus != -1) {
+                        if (plus == -1)
+                            index = minus;
+                        else if (minus == -1)
+                            index = plus;
+                        else
+                            index = plus < minus ? plus : minus;
+                    }
+                    double first = Double.parseDouble(list.get(index - 1));
+                    double second = Double.parseDouble(list.get(index + 1));
+                    double value = 0.0;
+                    if (power != -1)
+                        value = Math.pow(first, second);
+                    else if (times != -1 || divide != -1) {
                         if (list.get(index).equals("*"))
                             value = first * second;
                         else {
@@ -102,32 +124,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (second == 0)
                                 throw new Exception("Divide by 0");
                         }
-                        if ((double) ((int) value) == value)
-                            list.set(index - 1, "" + (int) value);
-                        else
-                            list.set(index - 1, "" + value);
-                        list.remove(index + 1);
-                        list.remove(index);
                     } else if (plus != -1 || minus != -1) {
-                        index = plus == -1 ? minus : plus;
-                        double first = Double.parseDouble(list.get(index - 1));
-                        double second = Double.parseDouble(list.get(index + 1));
-                        double value = 0.0;
                         if (list.get(index).equals("+"))
                             value = first + second;
                         else
                             value = first - second;
-                        if ((double) ((int) value) == value)
-                            list.set(index - 1, "" + (int) value);
-                        else
-                            list.set(index - 1, "" + value);
-                        list.remove(index + 1);
-                        list.remove(index);
                     }
+                    if ((double) ((int) value) == value)
+                        list.set(index - 1, "" + (int) value);
+                    else
+                        list.set(index - 1, "" + value);
+                    list.remove(index + 1);
+                    list.remove(index);
                 }
             } catch (Exception e) {
                 list = new ArrayList<String>();
-                list.add("Error");
+                list.add(e.getStackTrace() + "Error");
             }
             textOutput.setText(list.get(0));
             textLog.setText(exp + "\n        =" + textOutput.getText() + "\n\n" + textLog.getText());
