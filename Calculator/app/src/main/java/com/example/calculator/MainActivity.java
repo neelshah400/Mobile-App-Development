@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,8 +16,9 @@ import java.util.StringTokenizer;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     HorizontalScrollView scroll1;
+    ScrollView scroll2;
     TextView textOutput, textLog;
-    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear, buttonDot, buttonPower;
+    Button button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, buttonPlus, buttonMinus, buttonTimes, buttonDivide, buttonEquals, buttonClear, buttonDot, buttonPower, buttonDel, buttonE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         scroll1 = findViewById(R.id.id_scroll1);
+        scroll2 = findViewById(R.id.id_scroll2);
 
         textOutput = findViewById(R.id.id_textOutput);
         textLog = findViewById(R.id.id_textLog);
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonClear = findViewById(R.id.id_buttonClear);
         buttonDot = findViewById(R.id.id_buttonDot);
         buttonPower = findViewById(R.id.id_buttonPower);
+        buttonDel = findViewById(R.id.id_buttonDel);
+        buttonE = findViewById(R.id.id_buttonE);
 
         button0.setOnClickListener(this);
         button1.setOnClickListener(this);
@@ -66,86 +71,98 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonClear.setOnClickListener(this);
         buttonDot.setOnClickListener(this);
         buttonPower.setOnClickListener(this);
+        buttonDel.setOnClickListener(this);
+        buttonE.setOnClickListener(this);
 
     }
 
     public void onClick(View v) {
 
-        Button btn = (Button) v;
-        String str = (String) btn.getText();
-        if ("0123456789+-*/.^".contains(str))
-            textOutput.append(str);
-        if (!"=".contains(str))
-            scroll1.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
-        else
-            scroll1.fullScroll(HorizontalScrollView.FOCUS_LEFT);
-        if ("=".contains(str)) {
-            String exp = "" + textOutput.getText();
-            StringTokenizer tkn = new StringTokenizer(exp, "+-*/^", true);
-            ArrayList<String> list = new ArrayList<String>();
-            while (tkn.hasMoreTokens())
-                list.add(tkn.nextToken());
-            try {
-                while (list.size() > 1) {
-                    int plus = list.indexOf("+");
-                    int minus = list.indexOf("-");
-                    int times = list.indexOf("*");
-                    int divide = list.indexOf("/");
-                    int power = list.indexOf("^");
-
-                    int index = -1;
-                    if (power != -1)
-                        index = power;
-                    else if (times != -1 || divide != -1) {
-                        if (times == -1)
-                            index = divide;
-                        else if (divide == -1)
-                            index = times;
-                        else
-                            index = times < divide ? times : divide;
-                    } else if (plus != -1 || minus != -1) {
-                        if (plus == -1)
-                            index = minus;
-                        else if (minus == -1)
-                            index = plus;
-                        else
-                            index = plus < minus ? plus : minus;
-                    }
-                    double first = Double.parseDouble(list.get(index - 1));
-                    double second = Double.parseDouble(list.get(index + 1));
-                    double value = 0.0;
-                    if (power != -1)
-                        value = Math.pow(first, second);
-                    else if (times != -1 || divide != -1) {
-                        if (list.get(index).equals("*"))
-                            value = first * second;
-                        else {
-                            value = first / second;
-                            if (second == 0)
-                                throw new Exception("Divide by 0");
-                        }
-                    } else if (plus != -1 || minus != -1) {
-                        if (list.get(index).equals("+"))
-                            value = first + second;
-                        else
-                            value = first - second;
-                    }
-                    if ((double) ((int) value) == value)
-                        list.set(index - 1, "" + (int) value);
-                    else
-                        list.set(index - 1, "" + value);
-                    list.remove(index + 1);
-                    list.remove(index);
-                }
-            } catch (Exception e) {
-                list = new ArrayList<String>();
-                list.add(e.getStackTrace() + "Error");
+        try {
+            Button btn = (Button) v;
+            String str = (String) btn.getText();
+            if ("C".contains(str) || (textOutput.getText() + "").equals("Error"))
+                textOutput.setText("");
+            else if ("⌫".contains(str))
+                textOutput.setText((textOutput.getText() + "").substring(0, (textOutput.getText() + "").length() - 1));
+            if ("0123456789+–×÷.^".contains(str))
+                textOutput.append(str);
+            else if ("E".contains(str))
+                textOutput.append("×10^");
+            if (!"=".contains(str))
+                scroll1.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+            else {
+                scroll1.fullScroll(HorizontalScrollView.FOCUS_LEFT);
+                scroll2.fullScroll(ScrollView.FOCUS_UP);
             }
-            textOutput.setText(list.get(0));
-            textLog.setText(exp + "\n        =" + textOutput.getText() + "\n\n" + textLog.getText());
-        }
-        if ("C".contains(str))
+            if ("=".contains(str)) {
+                String exp = "" + textOutput.getText();
+                StringTokenizer tkn = new StringTokenizer(exp, "+–×÷^", true);
+                ArrayList<String> list = new ArrayList<String>();
+                while (tkn.hasMoreTokens())
+                    list.add(tkn.nextToken());
+                try {
+                    while (list.size() > 1) {
+                        int plus = list.indexOf("+");
+                        int minus = list.indexOf("–");
+                        int times = list.indexOf("×");
+                        int divide = list.indexOf("÷");
+                        int power = list.indexOf("^");
+
+                        int index = -1;
+                        if (power != -1)
+                            index = power;
+                        else if (times != -1 || divide != -1) {
+                            if (times == -1)
+                                index = divide;
+                            else if (divide == -1)
+                                index = times;
+                            else
+                                index = times < divide ? times : divide;
+                        } else if (plus != -1 || minus != -1) {
+                            if (plus == -1)
+                                index = minus;
+                            else if (minus == -1)
+                                index = plus;
+                            else
+                                index = plus < minus ? plus : minus;
+                        }
+                        double first = Double.parseDouble(list.get(index - 1));
+                        double second = Double.parseDouble(list.get(index + 1));
+                        double value = 0.0;
+                        if (power != -1)
+                            value = Math.pow(first, second);
+                        else if (times != -1 || divide != -1) {
+                            if (list.get(index).equals("×"))
+                                value = first * second;
+                            else {
+                                value = first / second;
+                                if (second == 0)
+                                    throw new Exception("Divide by 0");
+                            }
+                        } else if (plus != -1 || minus != -1) {
+                            if (list.get(index).equals("+"))
+                                value = first + second;
+                            else
+                                value = first - second;
+                        }
+                        if ((double) ((int) value) == value)
+                            list.set(index - 1, "" + (int) value);
+                        else
+                            list.set(index - 1, "" + value);
+                        list.remove(index + 1);
+                        list.remove(index);
+                    }
+                } catch (Exception e) {
+                    list = new ArrayList<String>();
+                    list.add("Error");
+                }
+                textOutput.setText(list.get(0));
+                textLog.setText(exp + "\n        =" + textOutput.getText() + "\n\n" + textLog.getText());
+            }
+        } catch (Exception e) {
             textOutput.setText("");
+        }
 
     }
 
