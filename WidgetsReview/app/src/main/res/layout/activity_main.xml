@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/id_textVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Volume Control" />
+
+    <RadioGroup
+        android:id="@+id/id_radioVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/id_radio25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="25%" />
+
+        <RadioButton
+            android:id="@+id/id_radio50"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="50%" />
+
+        <RadioButton
+            android:id="@+id/id_radio75"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="75%" />
+
+        <RadioButton
+            android:id="@+id/id_radio100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="100%" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/id_textRPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Rock Paper Scissor" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/id_radioRPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:id="@+id/id_radioRock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rock" />
+
+            <RadioButton
+                android:id="@+id/id_radioPaper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Paper" />
+
+            <RadioButton
+                android:id="@+id/id_radioScissor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Scissor" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/id_textVs"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="vs" />
+
+        <ImageView
+            android:id="@+id/id_imageCPU"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rps_placeholder" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_buttonPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Play!" />
+
+    <TextView
+        android:id="@+id/id_textStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Make a selection" />
+
+    <TextView
+        android:id="@+id/id_textScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score" />
+
+</LinearLayout>
