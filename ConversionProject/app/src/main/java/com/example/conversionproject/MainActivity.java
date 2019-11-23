@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         listNumbers = new ArrayList<Integer>();
         listNumbers.add(1);
         listNumbers.add(4);
-        listNumbers.add(16);
         listNumbers.add(32);
+        listNumbers.add(64);
 
         adapterUnits = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, listUnits);
         spinnerOrig.setAdapter(adapterUnits);
@@ -149,27 +149,12 @@ public class MainActivity extends AppCompatActivity {
             textRate.setText((int)(1.0 / factor) + " " + unitOrig + " = 1 " + unitFinal);
     }
 
-    public int textToNum(String s) {
-
-        if (s.equals("french fries"))
-            return 1;
-        else if (s.equals("french fries"))
-            return 4;
-        else if (s.equals("mozarella sticks"))
-            return 16;
-        else if (s.equals("burgers"))
-            return 32;
-        return 0;
-
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         super.onSaveInstanceState(outState);
         outState.putDouble(KEY_editNumber, number);
         outState.putString(KEY_spinnerOrig, unitOrig);
         outState.putString(KEY_spinnerFinal, unitFinal);
-
     }
+
 }
