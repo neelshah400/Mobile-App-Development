@@ -19,15 +19,20 @@ public class MainActivity extends AppCompatActivity {
 
     EditText editNumber;
     Spinner spinnerOrig, spinnerFinal;
-    TextView textTo, textTitle, textRate;
+    TextView textTo, textTitle, textRate, textResult;
     Button buttonConvert;
 
     ArrayList<String> listUnits;
+    ArrayList<Integer> listNumbers;
     ArrayAdapter<String> adapterUnits;
     String unitOrig, unitFinal;
     boolean selectOrig, selectFinal, selectNumber;
-    double number;
+    double number, factor;
     int numOrig, numFinal;
+
+    public static final String KEY_editNumber = "KEY_editNumber";
+    public static final String KEY_spinnerOrig = "KEY_spinnerOrig";
+    public static final String KEY_spinnerFinal = "KEY_spinnerFinal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +46,20 @@ public class MainActivity extends AppCompatActivity {
         textTo = findViewById(R.id.id_textTo);
         textTitle = findViewById(R.id.id_textTitle);
         textRate = findViewById(R.id.id_textRate);
-        buttonConvert = findViewById(R.id.id_buttonConvert);
+        textResult = findViewById(R.id.id_textResult);
+        buttonConvert = findViewById(R.id.id_buttonConvert);;
 
         listUnits = new ArrayList<String>();
-        listUnits.add("french fries"); // 1
-        listUnits.add("mozarella sticks"); // 4
-        listUnits.add("wraps"); // 16
-        listUnits.add("burgers"); // 32
+        listUnits.add("french fries");
+        listUnits.add("mozarella sticks");
+        listUnits.add("wraps");
+        listUnits.add("burgers");
+
+        listNumbers = new ArrayList<Integer>();
+        listNumbers.add(1);
+        listNumbers.add(4);
+        listNumbers.add(16);
+        listNumbers.add(32);
 
         adapterUnits = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, listUnits);
         spinnerOrig.setAdapter(adapterUnits);
@@ -91,8 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                number = Double.parseDouble(s.toString());
-                selectNumber = true;
+                if (s.toString().length() > 0) {
+                    number = Double.parseDouble(s.toString());
+                    selectNumber = true;
+                }
+                else
+                    selectNumber = false;
             }
 
             @Override
@@ -104,20 +120,56 @@ public class MainActivity extends AppCompatActivity {
         buttonConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectOrig && selectFinal && selectNumber) {
-                    numOrig = textToNum(unitOrig);
+                if (selectNumber) {
+                    textResult.setText((number + " " + unitOrig + " = " + (number * factor) + " " + unitFinal).replace(".0 ", " "));
                 }
             }
         });
 
+        if (savedInstanceState != null) {
+            number = savedInstanceState.getDouble(KEY_editNumber);
+            editNumber.setText("" + number);
+            unitOrig = savedInstanceState.getString(KEY_spinnerOrig);
+            spinnerOrig.setSelection(listUnits.indexOf(unitOrig));
+            unitFinal = savedInstanceState.getString(KEY_spinnerFinal);
+            spinnerFinal.setSelection(listUnits.indexOf(unitFinal));
+            displayRate();
+            buttonConvert.performClick();
+        }
+
     }
 
     public void displayRate() {
-
+        numOrig = listNumbers.get(listUnits.indexOf(unitOrig));
+        numFinal = listNumbers.get(listUnits.indexOf(unitFinal));
+        factor = (double)numOrig / (double)numFinal;
+        if (factor >= 1.0)
+            textRate.setText("1 " + unitOrig + " = " + (int)factor + " " + unitFinal);
+        else
+            textRate.setText((int)(1.0 / factor) + " " + unitOrig + " = 1 " + unitFinal);
     }
 
     public int textToNum(String s) {
+
+        if (s.equals("french fries"))
+            return 1;
+        else if (s.equals("french fries"))
+            return 4;
+        else if (s.equals("mozarella sticks"))
+            return 16;
+        else if (s.equals("burgers"))
+            return 32;
         return 0;
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+        outState.putDouble(KEY_editNumber, number);
+        outState.putString(KEY_spinnerOrig, unitOrig);
+        outState.putString(KEY_spinnerFinal, unitFinal);
+
+    }
 }
