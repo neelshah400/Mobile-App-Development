@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.id_listView);
 
         arrayList = new ArrayList<Pokemon>();
-        arrayList.add(new Pokemon(R.drawable.bulbasaur, "Bulbasaur", 1, "strength", "weakness"));
-        arrayList.add(new Pokemon(R.drawable.ivysaur, "Ivysaur", 1, "strength", "weakness"));
-        arrayList.add(new Pokemon(R.drawable.venusaur, "Venusaur", 1, "strength", "weakness"));
-        arrayList.add(new Pokemon(R.drawable.charmander, "Charmander", 1, "strength", "weakness"));
-        arrayList.add(new Pokemon(R.drawable.charmeleon, "Charmeleon", 1, "strength", "weakness"));
+        arrayList.add(new Pokemon(R.drawable.bulbasaur, "Bulbasaur", 13, "strength", "weakness"));
+        arrayList.add(new Pokemon(R.drawable.ivysaur, "Ivysaur", 16, "strength", "weakness"));
+        arrayList.add(new Pokemon(R.drawable.venusaur, "Venusaur", 9, "strength", "weakness"));
+        arrayList.add(new Pokemon(R.drawable.charmander, "Charmander", 20, "strength", "weakness"));
+        arrayList.add(new Pokemon(R.drawable.charmeleon, "Charmeleon", 5, "strength", "weakness"));
 
         CustomAdapter customAdapter = new CustomAdapter(this, R.layout.adapter_custom, arrayList);
         listView.setAdapter(customAdapter);
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             TextView textName = adapterView.findViewById(R.id.id_textName);
             TextView textStrength = adapterView.findViewById(R.id.id_textStrength);
             TextView textWeakness = adapterView.findViewById(R.id.id_textWeakness);
-            TextView textLevel = adapterView.findViewById(R.id.id_textLevel);
+            final TextView textLevel = adapterView.findViewById(R.id.id_textLevel);
             SeekBar seekBarLevel = adapterView.findViewById(R.id.id_seekBarLevel);
 
             final Pokemon pokemon = objects.get(position);
