@@ -21,9 +21,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="First Last"
-        android:textSize="24sp"
+        android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_imagePlayer"
-        app:layout_constraintEnd_toStartOf="@+id/id_buttonDelete"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/id_imagePlayer"
         app:layout_constraintTop_toTopOf="@+id/id_imagePlayer"
@@ -33,12 +33,14 @@
         android:id="@+id/id_buttonDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="@+id/id_imagePlayer"
+        app:layout_constraintBottom_toBottomOf="@+id/id_textPosition"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/id_imagePlayer"
-        app:layout_constraintTop_toTopOf="@+id/id_imagePlayer" />
+        app:layout_constraintStart_toEndOf="@+id/id_textName"
+        app:layout_constraintTop_toTopOf="@+id/id_textPosition" />
 
     <TextView
         android:id="@+id/id_textPosition"

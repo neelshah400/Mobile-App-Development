@@ -26,7 +26,7 @@ public class Player {
         this.blocks = blocks;
     }
 
-    public double getImage() {
+    public int getImage() {
         return image;
     }
 
