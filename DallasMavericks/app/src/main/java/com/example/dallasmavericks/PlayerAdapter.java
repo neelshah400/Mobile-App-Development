@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +33,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View adapterView = layoutInflater.inflate(resource, null);
@@ -42,7 +43,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         TextView textPosition = adapterView.findViewById(R.id.id_textPosition);
         TextView textAge = adapterView.findViewById(R.id.id_textAge);
         TextView textHeight = adapterView.findViewById(R.id.id_textHeight);
-        Button buttonDelete = adapterView.findViewById(R.id.id_buttonDelete);
+        ImageButton buttonDelete = adapterView.findViewById(R.id.id_buttonDelete);
 
         Player player = objects.get(position);
 
@@ -51,6 +52,13 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         textPosition.setText(player.getPosition());
         textAge.setText("" + player.getAge());
         textHeight.setText(player.getHeight());
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objects.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
         return adapterView;
 

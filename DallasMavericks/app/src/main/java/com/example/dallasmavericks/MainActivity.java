@@ -3,6 +3,9 @@ package com.example.dallasmavericks;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.id_listView);
+        textValuePoints = findViewById(R.id.id_textValuePoints);
+        textValueRebounds = findViewById(R.id.id_textValueRebounds);
+        textValueAssists = findViewById(R.id.id_textValueAssists);
+        textValueSteals = findViewById(R.id.id_textValueSteals);
+        textValueBlocks = findViewById(R.id.id_textValueBlocks);
 
         listPlayers = new ArrayList<Player>();
         listPlayers.add(new Player(R.drawable.luka_doncic, "Luka Doncic", "SF", 20, "6\' 7\"", 30.3, 10.1, 9.2, 1.4, 0.1));
@@ -40,6 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
         PlayerAdapter playerAdapter = new PlayerAdapter(this, R.layout.adapter_player, listPlayers);
         listView.setAdapter(playerAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Player player = listPlayers.get(position);
+                textValuePoints.setText("" + player.getPoints());
+                textValueRebounds.setText("" + player.getRebounds());
+                textValueAssists.setText("" + player.getAssists());
+                textValueSteals.setText("" + player.getSteals());
+                textValueBlocks.setText("" + player.getBlocks());
+
+            }
+        });
 
     }
 }

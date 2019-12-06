@@ -3,13 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/id_imagePlayer"
         android:layout_width="109dp"
         android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -20,27 +25,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="First Last"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_imagePlayer"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/id_buttonDelete"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/id_imagePlayer"
         app:layout_constraintTop_toTopOf="@+id/id_imagePlayer"
         app:layout_constraintVertical_bias="0.15" />
-
-    <Button
-        android:id="@+id/id_buttonDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="@+id/id_textPosition"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/id_textName"
-        app:layout_constraintTop_toTopOf="@+id/id_textPosition" />
 
     <TextView
         android:id="@+id/id_textPosition"
@@ -48,9 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="POS"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_imagePlayer"
+        app:layout_constraintEnd_toStartOf="@+id/id_buttonDelete"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/id_imagePlayer"
         app:layout_constraintTop_toTopOf="@+id/id_imagePlayer"
         app:layout_constraintVertical_bias="0.85" />
@@ -61,6 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="HT"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_textAge"
@@ -78,8 +78,23 @@
         android:text="AGE"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_textPosition"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/id_buttonDelete"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/id_textPosition"
         app:layout_constraintTop_toTopOf="@+id/id_textPosition" />
+
+    <ImageButton
+        android:id="@+id/id_buttonDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/id_imagePlayer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_imagePlayer"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

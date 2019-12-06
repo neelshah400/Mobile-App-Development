@@ -14,6 +14,7 @@ public class Player {
     private double blocks;
 
     public Player(int image, String name, String position, int age, String height, double points, double rebounds, double assists, double steals, double blocks) {
+
         this.image = image;
         this.name = name;
         this.position = position;
@@ -24,6 +25,7 @@ public class Player {
         this.assists = assists;
         this.steals = steals;
         this.blocks = blocks;
+
     }
 
     public int getImage() {
