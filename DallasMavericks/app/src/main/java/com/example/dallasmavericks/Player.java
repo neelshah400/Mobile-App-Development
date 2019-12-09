@@ -12,8 +12,9 @@ public class Player {
     private double assists;
     private double steals;
     private double blocks;
+    private String video;
 
-    public Player(int image, String name, String position, int age, String height, double points, double rebounds, double assists, double steals, double blocks) {
+    public Player(int image, String name, String position, int age, String height, double points, double rebounds, double assists, double steals, double blocks, String video) {
 
         this.image = image;
         this.name = name;
@@ -25,6 +26,7 @@ public class Player {
         this.assists = assists;
         this.steals = steals;
         this.blocks = blocks;
+        this.video = video;
 
     }
 
@@ -66,5 +68,9 @@ public class Player {
 
     public double getBlocks() {
         return blocks;
+    }
+
+    public String getVideo() {
+        return video;
     }
 }

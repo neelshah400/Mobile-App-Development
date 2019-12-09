@@ -165,4 +165,13 @@
         app:layout_constraintStart_toEndOf="@+id/id_listView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <WebView
+        android:id="@+id/id_webView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/id_listView"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
