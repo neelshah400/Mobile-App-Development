@@ -21,6 +21,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
     Context context;
     int resource;
     List<Player> objects;
+    Player player;
 
     public PlayerAdapter(@NonNull Context context, int resource, @NonNull List<Player> objects) {
 
@@ -45,7 +46,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         TextView textHeight = adapterView.findViewById(R.id.id_textHeight);
         ImageButton buttonDelete = adapterView.findViewById(R.id.id_buttonDelete);
 
-        Player player = objects.get(position);
+        player = objects.get(position);
 
         imagePlayer.setImageResource(player.getImage());
         textName.setText(player.getName());

@@ -1,6 +1,8 @@
 package com.example.dallasmavericks;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     private int image;
     private String name;
@@ -73,4 +75,5 @@ public class Player {
     public String getVideo() {
         return video;
     }
+
 }
