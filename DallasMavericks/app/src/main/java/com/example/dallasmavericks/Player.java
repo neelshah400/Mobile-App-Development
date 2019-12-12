@@ -14,9 +14,10 @@ public class Player implements Serializable {
     private double assists;
     private double steals;
     private double blocks;
+    private String description;
     private String video;
 
-    public Player(int image, String name, String position, int age, String height, double points, double rebounds, double assists, double steals, double blocks, String video) {
+    public Player(int image, String name, String position, int age, String height, double points, double rebounds, double assists, double steals, double blocks, String description, String video) {
 
         this.image = image;
         this.name = name;
@@ -28,6 +29,7 @@ public class Player implements Serializable {
         this.assists = assists;
         this.steals = steals;
         this.blocks = blocks;
+        this.description = description;
         this.video = video;
 
     }
@@ -70,6 +72,10 @@ public class Player implements Serializable {
 
     public double getBlocks() {
         return blocks;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getVideo() {

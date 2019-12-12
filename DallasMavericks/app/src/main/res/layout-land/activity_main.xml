@@ -97,7 +97,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0.0"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 
@@ -107,7 +106,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0.0"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 
@@ -117,7 +115,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0.0"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 
@@ -127,7 +124,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0.0"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 
@@ -137,7 +133,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0.0"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
         </TableRow>
@@ -155,13 +150,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/id_textDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Select a player."
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/id_listView"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <WebView
         android:id="@+id/id_webView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/id_listView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </WebView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -90,11 +90,21 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="@+id/id_imagePlayer"
+        app:layout_constraintBottom_toBottomOf="@+id/id_textHeight"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_imagePlayer"
+        app:layout_constraintTop_toTopOf="@+id/id_textHeight"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <ImageButton
+        android:id="@+id/id_buttonToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/id_buttonDelete"
+        app:layout_constraintEnd_toStartOf="@+id/id_buttonDelete"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/id_textHeight"
+        app:layout_constraintTop_toTopOf="@+id/id_buttonDelete"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

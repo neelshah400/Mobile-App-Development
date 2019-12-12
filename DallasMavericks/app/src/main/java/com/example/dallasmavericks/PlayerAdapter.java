@@ -44,6 +44,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         TextView textPosition = adapterView.findViewById(R.id.id_textPosition);
         TextView textAge = adapterView.findViewById(R.id.id_textAge);
         TextView textHeight = adapterView.findViewById(R.id.id_textHeight);
+        ImageButton buttonToggle = adapterView.findViewById(R.id.id_buttonToggle);
         ImageButton buttonDelete = adapterView.findViewById(R.id.id_buttonDelete);
 
         player = objects.get(position);
@@ -53,6 +54,12 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         textPosition.setText(player.getPosition());
         textAge.setText("" + player.getAge());
         textHeight.setText(player.getHeight());
+        buttonToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) context).toggle();
+            }
+        });
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
