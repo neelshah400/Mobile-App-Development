@@ -82,4 +82,8 @@ public class Player implements Serializable {
         return video;
     }
 
+    public String toString() {
+        return name + "\n\nPosition:\t" + position + "\nAge:\t\t" + age + "\nHeight:\t\t" + height + "\n\nPoints:\t\t" + points + "\nRebounds:\t" + rebounds + "\nAssists:\t" + assists + "\nSteals:\t\t" + steals + "\nBlocks:\t\t" + blocks + "\n\n" + description;
+    }
+
 }

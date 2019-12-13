@@ -2,6 +2,9 @@ package com.example.dallasmavericks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,10 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
     List<Player> objects;
     Player player;
 
+    ImageView imagePlayer;
+    TextView textName, textPosition, textAge, textHeight;
+    ImageButton buttonToggle, buttonShare, buttonDelete;
+
     public PlayerAdapter(@NonNull Context context, int resource, @NonNull List<Player> objects) {
 
         super(context, resource, objects);
@@ -39,13 +46,14 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         View adapterView = layoutInflater.inflate(resource, null);
 
-        ImageView imagePlayer = adapterView.findViewById(R.id.id_imagePlayer);
-        TextView textName = adapterView.findViewById(R.id.id_textName);
-        TextView textPosition = adapterView.findViewById(R.id.id_textPosition);
-        TextView textAge = adapterView.findViewById(R.id.id_textAge);
-        TextView textHeight = adapterView.findViewById(R.id.id_textHeight);
-        ImageButton buttonToggle = adapterView.findViewById(R.id.id_buttonToggle);
-        ImageButton buttonDelete = adapterView.findViewById(R.id.id_buttonDelete);
+        imagePlayer = adapterView.findViewById(R.id.id_imagePlayer);
+        textName = adapterView.findViewById(R.id.id_textName);
+        textPosition = adapterView.findViewById(R.id.id_textPosition);
+        textAge = adapterView.findViewById(R.id.id_textAge);
+        textHeight = adapterView.findViewById(R.id.id_textHeight);
+        buttonToggle = adapterView.findViewById(R.id.id_buttonToggle);
+        buttonShare = adapterView.findViewById(R.id.id_buttonShare);
+        buttonDelete = adapterView.findViewById(R.id.id_buttonDelete);
 
         player = objects.get(position);
 
@@ -60,6 +68,12 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
                 ((MainActivity) context).toggle();
             }
         });
+        buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) context).share();
+            }
+        });
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +82,13 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             }
         });
 
+        if (((MainActivity) context).getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            buttonToggle.setVisibility(View.VISIBLE);
+        else
+            buttonToggle.setVisibility(View.GONE);
+
         return adapterView;
 
     }
+
 }
