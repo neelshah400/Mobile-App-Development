@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             listPlayers.add(new Player(R.drawable.jj_barea, "J.J. Barea", "PG", 35, "5\' 10\"", 10.8, 1.5, 3.0, 0.5, 0.3, "A former NBA champion, J.J. Barea is using his experience to help the younger players develop. He has been very effective in limited minutes and provides a great veteran presence for the team.", "g0dPIzYB1-E"));
             listPlayers.add(new Player(R.drawable.dwight_powell, "Dwight Powell", "PF", 28, "6\' 10\"", 8.5, 4.6, 1.3, 0.7, 0.4, "An elite finisher at the rim, Dwight Powell has been very effective on the court with the starting unit. He shoots very efficiently as well.", "mReUkJ79YGo"));
             listPlayers.add(new Player(R.drawable.dorian_finney_smith, "Dorian Finney-Smith", "SF", 26, "6\' 7\"", 8.4, 5.0, 1.0, 0.6, 0.4, "Dorian Finney-Smith is one of the Mavericks\' top defenders. He has been a valuable starter for the team.", "dTg4agrxTH0"));
-            listPlayers.add(new Player(R.drawable.seth_curry, "Seth Curry", "SG", 29, "6\' 2\"", 8.4, 1.8, 1.6, 0.6, 0.2, "Seth Curry is an elite shooter with a lot of skill. Given his brother\'s talents, basketball clearly runs in the family.", "b2ZpF5bpskk"));
+            listPlayers.add(new Player(R.drawable.seth_curry, "Seth Curry", "SG", 29, "6\' 2\"", 8.4, 1.8, 1.6, 0.6, 0.2, "Seth Curry is an elite 3-point shooter with a lot of skill. Given his brother\'s talents, basketball clearly runs in the family.", "b2ZpF5bpskk"));
             listPlayers.add(new Player(R.drawable.maxi_kleber, "Maxi Kleber", "PF", 27, "6\' 10\"", 8.4, 5.9, 1.1, 0.3, 0.7, "Maxi Kleber is a valuable player with talents on both sides of the floor. As a big man, his ability to shoot and spread the floor makes Kleber dangerous for the opposing team.", "3CP5yl1-7mg"));
             listPlayers.add(new Player(R.drawable.delon_wright, "Delon Wright", "PG", 27, "6\' 5\"", 7.9, 3.6, 3.5, 1.2, 0.3, "Acquired this season by the Dallas Mavericks, Delon Wright has been an effective role player for the Mavericks. With his ability to guard multiple positions, Wright is a major defensive asset.", "vAI2d7sLEB8"));
             listPlayers.add(new Player(R.drawable.jalen_brunson, "Jalen Brunson", "PG", 23, "6\' 1\"", 7.5, 2.5, 2.7, 0.5, 0.0, "Jalen Brunson has been very efficient on the court despite limited minutes. The former National Player of the Year at Villanova University, Brunson is an effective leader in the second unit.", "2WFhnKdUbZg"));
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setFields() {
+        player = null;
         textValuePoints.setText("");
         textValueRebounds.setText("");
         textValueAssists.setText("");
