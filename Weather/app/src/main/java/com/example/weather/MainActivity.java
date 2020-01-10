@@ -2,6 +2,7 @@ package com.example.weather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     String zipCode;
     JSONObject jsonWeather, jsonForecast;
+    Drawable drawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +79,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... strings) {
 
-            String [] options = {"weather", "forecast"};
-            for (String option : options) {
-                try {
+            String[] options = {"weather", "forecast"};
+
+            try {
+
+                for (String option : options) {
                     URL url = new URL("https://api.openweathermap.org/data/2.5/" + option + "?appid=a7922898315caae04278b4bc1f7760a9&units=imperial&zip=" + strings[0] + ",us");
                     URLConnection urlConnection = url.openConnection();
                     InputStream inputStream = urlConnection.getInputStream();
@@ -93,10 +97,20 @@ public class MainActivity extends AppCompatActivity {
                         jsonWeather = new JSONObject(json);
                     else
                         jsonForecast = new JSONObject(json);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+
+                String icon = jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon");
+                Log.d("SHAH", icon);
+//                URL iconUrl = new URL("http://openweathermap.org/img/wn/" + icon + "@2x.png");
+                URL iconUrl = new URL("https://cdn1.iconfinder.com/data/icons/weather-429/64/weather_icons_color-06-512.png");
+                Log.d("SHAH", "http://openweathermap.org/img/wn/" + icon + "@2x.png");
+                InputStream inputStream = (InputStream) iconUrl.getContent();
+                drawable = Drawable.createFromStream(inputStream, "src");
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
             return null;
 
         }
@@ -108,13 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
                 textCity.setText(jsonWeather.getString("name"));
                 textTemperature.setText(Math.round(Double.parseDouble(jsonWeather.getJSONObject("main").getString("temp"))) + "°");
-
-                String icon = jsonWeather.getJSONArray("weather").getJSONObject(0).getString("icon");
-                Log.d("SHAH", icon);
-
-                URL url = new URL("http://openweathermap.org/img/wn/" + icon + "@2x.png");
-                InputStream inputStream = (InputStream) url.getContent();
-                Drawable drawable = Drawable.createFromStream(inputStream, "src");
                 imageWeather.setImageDrawable(drawable);
 
             } catch (Exception e) {
