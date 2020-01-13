@@ -20,7 +20,7 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
     List<Weather> objects;
     Weather weather;
 
-    TextView textDateTime, textDescription, textTempHigh, textTempLow;
+    TextView textDateTime, textDescription, textTempMax, textTempMin;
     ImageView imageWeather;
 
     public WeatherAdapter(@NonNull Context context, int resource, @NonNull List<Weather> objects) {
@@ -41,16 +41,16 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
         textDateTime = adapterView.findViewById(R.id.id_textDateTime);
         textDescription = adapterView.findViewById(R.id.id_textDescription);
-        textTempHigh = adapterView.findViewById(R.id.id_textTempHigh);
-        textTempLow = adapterView.findViewById(R.id.id_textTempLow);
+        textTempMax = adapterView.findViewById(R.id.id_textTempMax);
+        textTempMin = adapterView.findViewById(R.id.id_textTempMin);
         imageWeather = adapterView.findViewById(R.id.id_imageWeather);
 
         weather = objects.get(position);
 
         textDateTime.setText(weather.getFormattedDate("EEE - h a"));
         textDescription.setText(weather.getDescription());
-        textTempHigh.setText(weather.getTempMax() + "°");
-        textTempLow.setText(weather.getTempMin() + "°");
+        textTempMax.setText(weather.getTempMax() + "°");
+        textTempMin.setText(weather.getTempMin() + "°");
         imageWeather.setImageResource(weather.getImage());
 
         return adapterView;

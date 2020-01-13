@@ -30,7 +30,7 @@ import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView textZipCode, textCity, textDateTime, textTemperature, textDescription;
+    TextView textZipCode, textCity, textDateTime, textTemperature, textDescription, textQuotation;
     EditText editZipCode;
     ImageButton buttonSearch;
     ImageView imageWeather;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         textDateTime = findViewById(R.id.id_textDateTime);
         textTemperature = findViewById(R.id.id_textTemperature);
         textDescription = findViewById(R.id.id_textDescription);
+        textQuotation = findViewById(R.id.id_textQuotation);
         editZipCode = findViewById(R.id.id_editZipCode);
         buttonSearch = findViewById(R.id.id_buttonSearch);
         imageWeather = findViewById(R.id.id_imageWeather);
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 Weather weather = new Weather(jsonWeather);
                 textDateTime.setText(weather.getFormattedDate("EEE, MMM DD, yyyy - h:mm a"));
                 textDescription.setText(weather.getDescription());
+                textQuotation.setText(weather.getQuotation());
                 textTemperature.setText(weather.getTemp() + "°");
                 imageWeather.setImageResource(weather.getImage());
 
