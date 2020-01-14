@@ -141,7 +141,7 @@ public class Weather {
         if (icon.equals("01d") || icon.equals("01n"))
             return "I solemnly swear that there isn't a cloud in the sky.\n– Harry Potter";
         else if (icon.equals("02d") || icon.equals("02n"))
-            return "It does not do to dwell on dreams and forget to live.\n– Albus Dumbledore";
+            return "It does not do to dwell on clouds and forget to live.\n– Albus Dumbledore";
         else if (icon.equals("03d") || icon.equals("03n"))
             return "No good sittin’ worryin’ abou’ the clouds. What’s comin’ will come, an’ we’ll meet it when it does.\n– Rubeus Hagrid";
         else if (icon.equals("04d"))
