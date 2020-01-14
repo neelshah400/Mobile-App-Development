@@ -1,6 +1,7 @@
 package com.example.weather;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;

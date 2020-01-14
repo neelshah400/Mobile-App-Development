@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLight"
     android:paddingLeft="16dp"
     android:paddingTop="8dp"
     android:paddingRight="16dp"
@@ -15,69 +16,21 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/id_textTempMax"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/id_textDateTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
-        app:layout_constraintEnd_toStartOf="@+id/id_imageWeather"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_imageWeather"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Date and Time" />
-
-    <TextView
-        android:id="@+id/id_textTempMax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
-        app:layout_constraintEnd_toStartOf="@+id/id_textSlash"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_imageWeather"
-        tools:text="Hi" />
-
-    <TextView
-        android:id="@+id/id_textTempMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_imageWeather"
-        tools:text="Lo" />
-
-    <TextView
         android:id="@+id/id_textSlash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="/"
+        android:textColor="@color/colorBackground"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
         app:layout_constraintEnd_toStartOf="@+id/id_textTempMin"
@@ -86,15 +39,61 @@
         app:layout_constraintTop_toTopOf="@+id/id_imageWeather" />
 
     <TextView
-        android:id="@+id/id_textDescription"
+        android:id="@+id/id_textTempMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/colorBackground"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
-        app:layout_constraintEnd_toEndOf="@+id/id_textDateTime"
+        app:layout_constraintEnd_toStartOf="@+id/id_imageWeather"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_imageWeather"
+        tools:text="Lo" />
+
+    <TextView
+        android:id="@+id/id_textTempMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/colorBackground"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
+        app:layout_constraintEnd_toStartOf="@+id/id_textSlash"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_imageWeather"
+        tools:text="Hi" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/id_imageWeather"
+        app:layout_constraintEnd_toStartOf="@+id/id_textTempMax"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/id_textDateTime"
-        app:layout_constraintTop_toBottomOf="@+id/id_textDateTime"
-        app:layout_constraintVertical_bias="1.0"
-        tools:text="Description" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_imageWeather">
+
+        <TextView
+            android:id="@+id/id_textDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBackground"
+            android:textSize="18sp"
+            tools:text="Date and Time" />
+
+        <TextView
+            android:id="@+id/id_textDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBackground"
+            android:textSize="18sp"
+            tools:text="Description" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

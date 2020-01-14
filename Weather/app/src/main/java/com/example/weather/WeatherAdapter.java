@@ -47,7 +47,7 @@ public class WeatherAdapter extends ArrayAdapter<Weather> {
 
         weather = objects.get(position);
 
-        textDateTime.setText(weather.getFormattedDate("EEE - h a"));
+        textDateTime.setText(weather.getFormattedDate("EEE, MMM DD - h a"));
         textDescription.setText(weather.getDescription());
         textTempMax.setText(weather.getTempMax() + "°");
         textTempMin.setText(weather.getTempMin() + "°");
