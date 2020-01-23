@@ -8,12 +8,18 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +27,14 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
     int MY_REQUEST;
 
-    TextView textView;
+    TextView textLatitude, textLongitude, textAddress, textDistance;
+    Button buttonReset;
+
+    List<Address> list;
+    Geocoder geocoder;
+    Location oldLocation;
+    double distance = 0.0;
+    int status = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +42,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.id_textView);
+        textLatitude = findViewById(R.id.id_textLatitude);
+        textLongitude = findViewById(R.id.id_textLongitude);
+        textAddress = findViewById(R.id.id_textAddress);
+        textDistance = findViewById(R.id.id_textDistance);
+        buttonReset = findViewById(R.id.id_buttonReset);
+
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                distance = 0.0;
+                status = 0;
+            }
+        });
+
+        geocoder = new Geocoder(this, Locale.US);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                textView.setText("(" + location.getLatitude() + ", " + location.getLongitude() + ")");
+                if (status == 0)
+                    oldLocation = location;
+                textLatitude.setText(location.getLatitude() + "");
+                textLongitude.setText(location.getLongitude() + "");
+                try {
+                    list = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                textAddress.setText(list.get(0).getAddressLine(0) + "");
+                distance += location.distanceTo(oldLocation);
             }
 
             @Override
@@ -60,17 +98,25 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, MY_REQUEST);
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
 
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-//        if (requestCode == MY_REQUEST) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-//
-//        }
+        if (requestCode == MY_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                }
+        }
 
     }
 
