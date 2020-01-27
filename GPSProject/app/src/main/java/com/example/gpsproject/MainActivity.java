@@ -14,10 +14,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
     int MY_REQUEST;
 
-    TextView textLatitude, textLongitude, textAddress, textDistance;
+    TextView textLatitude, textLongitude, textAddress, textDistance, textTime;
     Button buttonReset;
 
     List<Address> list;
     Geocoder geocoder;
-    Location oldLocation;
     double distance = 0.0;
-    int status = 0;
+    Location oldLocation;
+    long startTime = SystemClock.elapsedRealtime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +48,15 @@ public class MainActivity extends AppCompatActivity {
         textLongitude = findViewById(R.id.id_textLongitude);
         textAddress = findViewById(R.id.id_textAddress);
         textDistance = findViewById(R.id.id_textDistance);
+        textTime = findViewById(R.id.id_textTime);
         buttonReset = findViewById(R.id.id_buttonReset);
 
         buttonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 distance = 0.0;
-                status = 0;
+                oldLocation = null;
+                startTime = SystemClock.elapsedRealtime();
             }
         });
 
@@ -63,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                if (status == 0)
+                if (oldLocation == null)
                     oldLocation = location;
                 textLatitude.setText(location.getLatitude() + "");
                 textLongitude.setText(location.getLongitude() + "");
@@ -74,7 +78,14 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 textAddress.setText(list.get(0).getAddressLine(0) + "");
-                distance += location.distanceTo(oldLocation);
+                double distanceToLast = location.distanceTo(oldLocation);
+                if (distanceToLast > 3.0) {
+                    distance += distanceToLast;
+                    oldLocation = location;
+                }
+                textDistance.setText(distance + " m");
+                textTime.setText(SystemClock.elapsedRealtime() + "");
+
             }
 
             @Override
@@ -101,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, locationListener);
         }
 
     }
