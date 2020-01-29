@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
     Geocoder geocoder;
     double distance = 0.0;
     Location oldLocation;
-    long startTime = SystemClock.elapsedRealtime();
+
+    int minTime = 10000;
+    int minDistance = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 distance = 0.0;
                 oldLocation = null;
-                startTime = SystemClock.elapsedRealtime();
+                textDistance.setText("0.0 m");
             }
         });
 
@@ -79,10 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 textAddress.setText(list.get(0).getAddressLine(0) + "");
                 double distanceToLast = location.distanceTo(oldLocation);
-                if (distanceToLast > 3.0) {
-                    distance += distanceToLast;
-                    oldLocation = location;
-                }
+                distance += distanceToLast;
+                oldLocation = location;
                 textDistance.setText(distance + " m");
                 textTime.setText(SystemClock.elapsedRealtime() + "");
 
@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 1, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, locationListener);
         }
 
     }
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, locationListener);
                 }
         }
 
