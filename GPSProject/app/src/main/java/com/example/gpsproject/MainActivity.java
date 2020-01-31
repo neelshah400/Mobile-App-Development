@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     double distance = 0.0;
     Location oldLocation;
 
-    int minTime = 10000;
-    int minDistance = 10;
+    int minTime = 1000;
+    int minDistance = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
