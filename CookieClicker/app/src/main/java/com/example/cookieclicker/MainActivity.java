@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +18,35 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout constraintLayout;
             
-    static TextView textMoney, textIncome;
-    ImageView imageCorn;
-    
+    static TextView textMoney, textIncome, textTractor, textTractorBenefit, textTractorQuantity;
+    ImageView imageCorn, imageTractor;
+    static Button buttonTractor;
+
     TextView textPlus;
 
     static AtomicInteger money = new AtomicInteger();
     static AtomicInteger income = new AtomicInteger();
+    static AtomicInteger benefit = new AtomicInteger();
+    static AtomicInteger quantity = new AtomicInteger();
+    static AtomicInteger cost = new AtomicInteger();
+
+    final static Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +58,45 @@ public class MainActivity extends AppCompatActivity {
         
         textMoney = findViewById(R.id.id_textMoney);
         textIncome = findViewById(R.id.id_textIncome);
-        imageCorn = findViewById(R.id.id_imageCorn);
+        textTractor = findViewById(R.id.id_textTractor);
+        textTractorBenefit = findViewById(R.id.id_textTractorBenefit);
+        textTractorQuantity = findViewById(R.id.id_textTractorQuantity);
 
-        income.set(1);
+        imageCorn = findViewById(R.id.id_imageCorn);
+        imageTractor = findViewById(R.id.id_imageTractor);
+
+        buttonTractor = findViewById(R.id.id_buttonTractor);
+
+        money.set(0);
+        income.set(0);
+        benefit.set(1);
+        quantity.set(0);
+        cost.set(50);
+
+        buttonTractor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (money.get() >= cost.get()) {
+                    money.getAndAdd(-1 * cost.get());
+                    quantity.getAndAdd(1);
+                    income.getAndAdd(benefit.get());
+//                    benefit.getAndAdd(1);
+                    cost.set((int) (cost.get() * 1.15));
+                    setFields();
+                }
+            }
+        });
 
         imageCorn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                money.getAndAdd(1);
+                setFields();
+
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1.0f, 1.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 scaleAnimation.setDuration(400);
                 imageCorn.startAnimation(scaleAnimation);
-                
-                money.getAndAdd(1);
-                textMoney.setText(money + " cobs");
 
                 textPlus = new TextView(MainActivity.this);
                 textPlus.setId(View.generateViewId());
@@ -97,33 +134,43 @@ public class MainActivity extends AppCompatActivity {
 
                 textPlus.startAnimation(animationSet);
                 textPlus.setVisibility(View.INVISIBLE);
-                
+
             }
         });
 
+        handler.postDelayed(new BackgroundThread(), 1000);
+
     }
 
-    public static class BackgroundThread extends HandlerThread {
+    public static void setFields() {
 
-        Handler handler;
+        textMoney.setText(money.get() + " cobs");
+        textIncome.setText(income.get() + " cobs/sec");
+        textTractorBenefit.setText("+" + benefit.get() + " cobs/sec");
+        textTractorQuantity.setText(quantity.get() + " owned");
+        buttonTractor.setText(cost.get() + " cobs");
 
-        public BackgroundThread(String name) {
-            super(name);
-        }
+        if (money.get() < cost.get())
+            buttonTractor.setEnabled(false);
+        else
+            buttonTractor.setEnabled(true);
+
+    }
+
+    public static class BackgroundThread extends Thread {
 
         public void run() {
 
             try {
                 money.getAndAdd(income.get());
-                textMoney.setText(money + " cobs");
+                setFields();
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            handler.postDelayed(this, 1000);
 
         }
 
     }
-
-
 
 }
