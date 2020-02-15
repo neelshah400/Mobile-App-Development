@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -22,12 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        constraintLayout = findViewById(R.id.id_constraintLayout);
+        constraintLayout = findViewById(R.id.id_layout);
         
         textMoney = findViewById(R.id.id_textMoney);
         textIncome = findViewById(R.id.id_textIncome);
@@ -100,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
                 textPlus = new TextView(MainActivity.this);
                 textPlus.setId(View.generateViewId());
-                textPlus.setText("+1");
-                textPlus.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+                textPlus.setText("\uD83C\uDF3D");
+                textPlus.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
 
                 ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
                 textPlus.setLayoutParams(params);
