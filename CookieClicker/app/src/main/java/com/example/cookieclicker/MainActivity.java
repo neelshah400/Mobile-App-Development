@@ -10,6 +10,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -17,7 +19,10 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,7 +35,12 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageCorn, imageTractor;
     static Button buttonTractor;
 
+    HorizontalScrollView scrollTractors;
+    LinearLayout layoutTractors;
+    ViewTreeObserver viewTreeObserver;
+
     TextView textPlus;
+    ImageView cloneTractor;
 
     static AtomicInteger money = new AtomicInteger();
     static AtomicInteger income = new AtomicInteger();
@@ -59,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
         buttonTractor = findViewById(R.id.id_buttonTractor);
 
+        scrollTractors = findViewById(R.id.id_scrollTractors);
+        layoutTractors = findViewById(R.id.id_layoutTractors);
+        viewTreeObserver = scrollTractors.getViewTreeObserver();
+
         money.set(0);
         income.set(0);
         benefit.set(1);
@@ -69,13 +83,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (money.get() >= cost.get()) {
+
                     money.getAndAdd(-1 * cost.get());
                     quantity.getAndAdd(1);
                     income.getAndAdd(benefit.get());
 //                    benefit.getAndAdd(1);
                     cost.set((int) (cost.get() * 1.15));
                     setFields();
+
+                    cloneTractor = new ImageView(MainActivity.this);
+                    cloneTractor.setImageResource(R.drawable.tractor);
+                    cloneTractor.setId(View.generateViewId());
+
+                    int size = (int)(50.0f * getResources().getDisplayMetrics().density);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+                    cloneTractor.setLayoutParams(params);
+
+                    layoutTractors.addView(cloneTractor);
+
+                    AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+                    alphaAnimation.setDuration(1000);
+                    cloneTractor.startAnimation(alphaAnimation);
+
                 }
+            }
+        });
+
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                scrollTractors.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
+
             }
         });
 
@@ -117,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
                 TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, -600);
                 translateAnimation.setDuration(1000);
-                animationSet.addAnimation(translateAnimation);
 
+                animationSet.addAnimation(translateAnimation);
                 AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
                 alphaAnimation.setInterpolator(new AccelerateInterpolator());
                 alphaAnimation.setDuration(1000);
