@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.animation.ValueAnimator;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -37,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     HorizontalScrollView scrollTractors;
     LinearLayout layoutTractors;
-    ViewTreeObserver viewTreeObserver;
 
     TextView textPlus;
     ImageView cloneTractor;
+
+    ImageView background1, background2;
 
     static AtomicInteger money = new AtomicInteger();
     static AtomicInteger income = new AtomicInteger();
@@ -71,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
         scrollTractors = findViewById(R.id.id_scrollTractors);
         layoutTractors = findViewById(R.id.id_layoutTractors);
-        viewTreeObserver = scrollTractors.getViewTreeObserver();
+
+        background1 = findViewById(R.id.id_background1);
+        background2 = findViewById(R.id.id_background2);
 
         money.set(0);
         income.set(0);
@@ -79,9 +85,23 @@ public class MainActivity extends AppCompatActivity {
         quantity.set(0);
         cost.set(50);
 
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setDuration(10000L);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float translation = background1.getWidth() * (float) animation.getAnimatedValue();
+                background1.setTranslationX(translation);
+                background2.setTranslationX(translation - background1.getWidth());
+            }
+        });
+        valueAnimator.start();
+
         buttonTractor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (money.get() >= cost.get()) {
 
                     money.getAndAdd(-1 * cost.get());
@@ -95,9 +115,11 @@ public class MainActivity extends AppCompatActivity {
                     cloneTractor.setImageResource(R.drawable.tractor);
                     cloneTractor.setId(View.generateViewId());
 
-                    int size = (int)(50.0f * getResources().getDisplayMetrics().density);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
+                    int size = (int)(getResources().getDisplayMetrics().density);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(50 * size, 50 * size);
                     cloneTractor.setLayoutParams(params);
+
+                    cloneTractor.setPadding(10 * size, 0, 0, 10 * size);
 
                     layoutTractors.addView(cloneTractor);
 
@@ -106,12 +128,13 @@ public class MainActivity extends AppCompatActivity {
                     cloneTractor.startAnimation(alphaAnimation);
 
                 }
+
             }
         });
 
-        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        layoutTractors.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
-            public void onGlobalLayout() {
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
 
                 scrollTractors.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
 
@@ -126,13 +149,16 @@ public class MainActivity extends AppCompatActivity {
                 setFields();
 
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1.5f, 1.0f, 1.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                scaleAnimation.setDuration(400);
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setInterpolator(new BounceInterpolator());
                 imageCorn.startAnimation(scaleAnimation);
 
                 textPlus = new TextView(MainActivity.this);
                 textPlus.setId(View.generateViewId());
-                textPlus.setText("\uD83C\uDF3D");
-                textPlus.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
+//                textPlus.setText("\uD83C\uDF3D");\
+                textPlus.setText("+1\uD83C\uDF3D");
+                textPlus.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+//                textPlus.setTextColor(Color.parseColor("#FFEA00"));
 
                 ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
                 textPlus.setLayoutParams(params);
@@ -155,9 +181,10 @@ public class MainActivity extends AppCompatActivity {
                 AnimationSet animationSet = new AnimationSet(false);
 
                 TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, -600);
+                translateAnimation.setInterpolator(new AccelerateInterpolator());
                 translateAnimation.setDuration(1000);
-
                 animationSet.addAnimation(translateAnimation);
+
                 AlphaAnimation alphaAnimation = new AlphaAnimation(1.0f, 0.0f);
                 alphaAnimation.setInterpolator(new AccelerateInterpolator());
                 alphaAnimation.setDuration(1000);
