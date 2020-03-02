@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     TextView result;
 
     static final int NUMBER_CODE = 1234;
-    static  final String INTENT_CODE = "SECRET CODE";
+    static final String INTENT_CODE = "SECRET CODE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
