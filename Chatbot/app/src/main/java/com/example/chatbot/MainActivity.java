@@ -6,8 +6,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.Editable;
@@ -20,14 +25,13 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView textPhoneNumber, textMessage;
-    EditText editPhoneNumber, editMessage;
-    Button buttonSend;
-
-    String phoneNumber, message;
+    String phoneNumber, messageIn, messageOut;
 
     int MY_REQUEST;
+
+    BroadcastReceiver receiver;
     SmsManager smsManager;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,64 +39,75 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textPhoneNumber = findViewById(R.id.id_textPhoneNumber);
-        textMessage = findViewById(R.id.id_textMessage);
-        editPhoneNumber = findViewById(R.id.id_editPhoneNumber);
-        editMessage = findViewById(R.id.id_editMessage);
-        buttonSend = findViewById(R.id.id_buttonSend);
+        phoneNumber = "";
 
-        editPhoneNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
-            }
+    @Override
+    protected void onResume() {
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                phoneNumber = s + "";
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        editMessage.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                message = s + "";
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, MY_REQUEST);
-        }
+        super.onResume();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
 
-            smsManager = SmsManager.getDefault();
-            buttonSend.setOnClickListener(new View.OnClickListener() {
+            receiver = new BroadcastReceiver() {
                 @Override
-                public void onClick(View v) {
-                    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
-                    Log.d("TAG", "Sent");
+                public void onReceive(Context context, Intent intent) {
+
+                    Bundle bundle = intent.getExtras();
+                    Object[] pdus = (Object[]) bundle.get("pdus");
+                    String format = bundle.getString("format");
+                    SmsMessage[] messages = new SmsMessage[pdus.length];
+                    for (int i = 0; i < pdus.length; i++)
+                        messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i], format);
+
+                    if (phoneNumber.equals(""))
+                        phoneNumber = messages[0].getOriginatingAddress();
+                    messageIn = messages[0].getMessageBody();
+                    Log.d("TAG", phoneNumber + ": " + messageIn);
+
+                    handler = new Handler();
+                    handler.postDelayed(sendMessage("This response is from a chatbot"), 2000);
+
                 }
-            });
+            };
+            IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+            registerReceiver(receiver, filter);
 
         }
+
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+
+            unregisterReceiver(receiver);
+
+        }
+
+    }
+
+    public Runnable sendMessage(String message) {
+
+        messageOut = message;
+        return new Runnable() {
+            @Override
+            public void run() {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+
+                    smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(phoneNumber, null, messageOut, null, null);
+
+                }
+            }
+        };
 
     }
 
