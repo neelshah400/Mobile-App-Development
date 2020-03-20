@@ -23,9 +23,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     String phoneNumber, messageIn, messageOut;
+    int stateIn, stateOut;
 
     int MY_REQUEST;
 
@@ -40,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         phoneNumber = "";
+        stateIn = 0;
+        stateOut = 1;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, MY_REQUEST);
+        }
 
     }
 
@@ -67,8 +77,14 @@ public class MainActivity extends AppCompatActivity {
                     messageIn = messages[0].getMessageBody();
                     Log.d("TAG", phoneNumber + ": " + messageIn);
 
+                    int delay = (int)(Math.random() * 6000) + 2000;
+                    stateIn = detectState();
+                    Log.d("TAG", stateIn + "");
+                    messageOut = generateMessage();
+
                     handler = new Handler();
-                    handler.postDelayed(sendMessage("This response is from a chatbot"), 2000);
+                    handler.postDelayed(sendMessage(messageOut), delay);
+                    stateOut++;
 
                 }
             };
@@ -108,6 +124,70 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+    }
+
+    /*------------------
+
+    STATES:
+        0 --> waiting
+        1 --> greeting
+
+     ------------------*/
+
+    public int detectState() {
+
+        messageIn = messageIn.toLowerCase();
+        if (stateIn == 0) {
+            if (!messageIn.equals(""))
+                return 1;
+        }
+//        return -1;
+        return stateOut; // temporary
+
+    }
+
+    public String generateMessage() {
+
+        ArrayList<String> options = new ArrayList<String>();
+        if (stateIn == stateOut) {
+            if (stateOut == 1) {
+                options.add("Hey, how are you doing?");
+                options.add("Hello, how have you been?");
+                options.add("Hey, how are you?");
+            }
+            else if (stateOut == 2) {
+                options.add("I've been meaning to talk to you");
+                options.add("We should have a chat");
+                options.add("I need to discuss something with you");
+                options.add("We need to talk");
+            }
+            else if (stateOut == 3) {
+                options.add("It's about your job");
+                options.add("It relates to your performance at work");
+                options.add("It's about your job performance");
+            }
+            else if (stateOut == 4) {
+                options.add("I've noticed a decline in your performace recently");
+                options.add("It seems like you haven't been on top of your game recently");
+                options.add("Your recent performance hasn't been up to par");
+                options.add("You haven't been meeting our expectations recently");
+            }
+            else if (stateOut == 5) {
+                options.add("I'm sorry, I have no choice but to fire you");
+                options.add("Effective immediately, you are being terminated");
+                options.add("Your services are no longer needed");
+                options.add("I'm sorry to inform you that your journey with us has reached its end");
+            }
+            else if (stateOut == 6) {
+                options.add("Goodbye, please gather your belongings first thing tomorrow");
+                options.add("Bye, please clear your desk out tomorrow morning");
+                options.add("Goodbye, wish you the best of luck for the future");
+            }
+        }
+        if (options.size() > 0)
+            return options.get((int)(Math.random() * options.size()));
+        return "Error";
 
     }
 
