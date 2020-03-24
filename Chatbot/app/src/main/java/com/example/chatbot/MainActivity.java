@@ -82,9 +82,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("TAG", stateIn + "");
                     messageOut = generateMessage();
 
-                    handler = new Handler();
-                    handler.postDelayed(sendMessage(messageOut), delay);
-                    stateOut++;
+                    if (!messageOut.equals("")) {
+                        handler = new Handler();
+                        handler.postDelayed(sendMessage(messageOut), delay);
+                        if (stateIn > 0 && stateIn == stateOut)
+                            stateOut++;
+                    }
 
                 }
             };
@@ -127,30 +130,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*------------------
-
-    STATES:
-        0 --> waiting
-        1 --> greeting
-
-     ------------------*/
-
     public int detectState() {
 
         messageIn = messageIn.toLowerCase();
-        if (stateIn == 0) {
-            if (!messageIn.equals(""))
-                return 1;
-        }
-//        return -1;
-        return stateOut; // temporary
+
+        if (stateIn == 0 && !messageIn.equals(""))
+            return 1;
+        else if (messageIn.matches(".*(good|okay|fine|bad|well).*"))
+            return 2;
+        else if (messageIn.matches(".*(why|what)\\??$"))
+            return 3;
+        else if (messageIn.matches(".*(what|did|am).*(about|problem|wrong|trouble).*\\?.*"))
+            return 4;
+        else if (messageIn.matches(".*(really|when|do).*\\?.*"))
+            return 5;
+        else if (messageIn.matches(".*(screw|no|please|beg).*"))
+            return 6;
+        else if (stateIn >= 6 && messageIn.matches(".*bye.*"))
+            return 7;
+        else
+            return -1;
 
     }
 
     public String generateMessage() {
 
         ArrayList<String> options = new ArrayList<String>();
-        if (stateIn == stateOut) {
+        if (stateIn == stateOut && stateIn > 0) {
             if (stateOut == 1) {
                 options.add("Hey, how are you doing?");
                 options.add("Hello, how have you been?");
@@ -168,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 options.add("It's about your job performance");
             }
             else if (stateOut == 4) {
-                options.add("I've noticed a decline in your performace recently");
+                options.add("I've noticed a decline in your performance recently");
                 options.add("It seems like you haven't been on top of your game recently");
                 options.add("Your recent performance hasn't been up to par");
                 options.add("You haven't been meeting our expectations recently");
@@ -184,6 +190,13 @@ public class MainActivity extends AppCompatActivity {
                 options.add("Bye, please clear your desk out tomorrow morning");
                 options.add("Goodbye, wish you the best of luck for the future");
             }
+            else if (stateOut > 6) {
+                options.add("");
+            }
+        }
+        else {
+            options.add("I don't understand, could you respond more clearly?");
+            options.add("I'm confused, can you reply again?");
         }
         if (options.size() > 0)
             return options.get((int)(Math.random() * options.size()));
