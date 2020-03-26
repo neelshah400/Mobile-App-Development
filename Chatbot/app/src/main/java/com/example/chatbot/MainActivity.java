@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView textState;
+
     String phoneNumber, messageIn, messageOut;
     int stateIn, stateOut;
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        textState = findViewById(R.id.id_textState);
 
         phoneNumber = "";
         stateIn = 0;
@@ -83,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                     messageOut = generateMessage();
 
                     if (!messageOut.equals("")) {
-                        handler = new Handler();
-                        handler.postDelayed(sendMessage(messageOut), delay);
                         if (stateIn > 0 && stateIn == stateOut)
                             stateOut++;
+                        handler = new Handler();
+                        handler.postDelayed(sendMessage(messageOut), delay);
                     }
 
                 }
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             return 5;
         else if (messageIn.matches(".*(screw|no|please|beg).*"))
             return 6;
-        else if (stateIn >= 6 && messageIn.matches(".*bye.*"))
+        else if (stateIn >= 6)
             return 7;
         else
             return -1;
@@ -161,42 +165,50 @@ public class MainActivity extends AppCompatActivity {
                 options.add("Hey, how are you doing?");
                 options.add("Hello, how have you been?");
                 options.add("Hey, how are you?");
+                textState.setText("Greeting Employee");
             }
             else if (stateOut == 2) {
                 options.add("I've been meaning to talk to you");
                 options.add("We should have a chat");
                 options.add("I need to discuss something with you");
                 options.add("We need to talk");
+                textState.setText("Initiating Conversation");
             }
             else if (stateOut == 3) {
                 options.add("It's about your job");
                 options.add("It relates to your performance at work");
                 options.add("It's about your job performance");
+                textState.setText("Specifying Topic of Discussion");
             }
             else if (stateOut == 4) {
                 options.add("I've noticed a decline in your performance recently");
                 options.add("It seems like you haven't been on top of your game recently");
                 options.add("Your recent performance hasn't been up to par");
                 options.add("You haven't been meeting our expectations recently");
+                textState.setText("Discussing Job Performance");
             }
             else if (stateOut == 5) {
                 options.add("I'm sorry, I have no choice but to fire you");
                 options.add("Effective immediately, you are being terminated");
                 options.add("Your services are no longer needed");
                 options.add("I'm sorry to inform you that your journey with us has reached its end");
+                textState.setText("Firing Employee");
             }
             else if (stateOut == 6) {
                 options.add("Goodbye, please gather your belongings first thing tomorrow");
                 options.add("Bye, please clear your desk out tomorrow morning");
                 options.add("Goodbye, wish you the best of luck for the future");
+                textState.setText("Dismissing Employee");
             }
             else if (stateOut > 6) {
                 options.add("");
+                textState.setText("Finished Conversation");
             }
         }
         else {
             options.add("I don't understand, could you respond more clearly?");
             options.add("I'm confused, can you reply again?");
+            textState.setText(textState.getText() + "\n\nConfused...Seeking Clarification");
         }
         if (options.size() > 0)
             return options.get((int)(Math.random() * options.size()));
