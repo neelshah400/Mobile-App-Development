@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             return 4;
         else if (messageIn.matches(".*(really|when|do).*\\?.*"))
             return 5;
-        else if (messageIn.matches(".*(screw|no|please|beg).*"))
+        else if (messageIn.matches(".*(no|please|beg).*"))
             return 6;
         else if (stateIn >= 6)
             return 7;
@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 options.add("Hey, how are you doing?");
                 options.add("Hello, how have you been?");
                 options.add("Hey, how are you?");
+                options.add("Hi, how is everything going?");
                 textState.setText("Greeting Employee");
             }
             else if (stateOut == 2) {
@@ -178,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 options.add("It's about your job");
                 options.add("It relates to your performance at work");
                 options.add("It's about your job performance");
+                options.add("It pertains to your work");
                 textState.setText("Specifying Topic of Discussion");
             }
             else if (stateOut == 4) {
@@ -198,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 options.add("Goodbye, please gather your belongings first thing tomorrow");
                 options.add("Bye, please clear your desk out tomorrow morning");
                 options.add("Goodbye, wish you the best of luck for the future");
+                options.add("Bye, hope you have more success in your future endeavors");
                 textState.setText("Dismissing Employee");
             }
             else if (stateOut > 6) {
