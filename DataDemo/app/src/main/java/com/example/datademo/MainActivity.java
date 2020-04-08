@@ -37,14 +37,20 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        String lines = "";
+
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(openFileInput(file)));
-            String line = null;
-            while ((line = reader.readLine()) != null)
-                textView.setText(textView.getText() + line);
+            String line = reader.readLine();
+            while (line != null) {
+                lines += line;
+                line = reader.readLine();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        textView.setText(lines);
 
     }
 
