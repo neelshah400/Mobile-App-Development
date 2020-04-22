@@ -26,9 +26,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/id_textView" />
 
-    <fragment
+    <LinearLayout
         android:id="@+id/id_top"
-        android:name="com.example.fragmentdemo.TopFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -40,8 +39,7 @@
         app:layout_constraintBottom_toTopOf="@+id/id_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_top" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/id_bottom"

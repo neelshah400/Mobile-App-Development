@@ -30,8 +30,8 @@ public class TopFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
         return view;
+
     }
 
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFC107"
-    tools:context=".BottonFragment">
+    tools:context=".BottomFragment">
 
     <TextView
         android:id="@+id/bot_text"
@@ -17,4 +17,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/id_buttonChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bot_text"
+        app:layout_constraintStart_toStartOf="@+id/bot_text"
+        app:layout_constraintTop_toBottomOf="@+id/bot_text" />
 </androidx.constraintlayout.widget.ConstraintLayout>
