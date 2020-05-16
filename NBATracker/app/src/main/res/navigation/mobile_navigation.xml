@@ -7,23 +7,23 @@
 
     <fragment
         android:id="@+id/navigation_news"
-        android:name="com.example.nbatracker.ui.news.NewsFragment"
+        android:name="com.example.nbatracker.NewsFragment"
         android:label="News"
         tools:layout="@layout/fragment_news" />
 
     <fragment
         android:id="@+id/navigation_games"
-        android:name="com.example.nbatracker.ui.games.GamesFragment"
+        android:name="com.example.nbatracker.GamesFragment"
         android:label="Games"
         tools:layout="@layout/fragment_games" />
 
     <fragment
         android:id="@+id/navigation_standings"
-        android:name="com.example.nbatracker.ui.standings.StandingsFragment"
+        android:name="com.example.nbatracker.StandingsFragment"
         android:label="Standings"
         tools:layout="@layout/fragment_standings" />
     <fragment
         android:id="@+id/navigation_preferences"
-        android:name="com.example.nbatracker.ui.preferences.PreferencesFragment"
+        android:name="com.example.nbatracker.PreferencesFragment"
         android:label="Preferences" />
 </navigation>

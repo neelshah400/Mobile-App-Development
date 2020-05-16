@@ -1,4 +1,4 @@
-package com.example.nbatracker.ui.standings;
+package com.example.nbatracker;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,23 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.nbatracker.R;
-
 public class StandingsFragment extends Fragment {
 
-    private StandingsViewModel standingsViewModel;
+    private SharedViewModel model;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        standingsViewModel = ViewModelProviders.of(this).get(StandingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_standings, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        standingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+
         return root;
 
     }
