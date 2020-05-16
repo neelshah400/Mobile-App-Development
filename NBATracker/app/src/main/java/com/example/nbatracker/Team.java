@@ -18,20 +18,7 @@ public class Team {
     private String confName;
     private String divName;
 
-    public Team(boolean isNBAFranchise, boolean isAllStar, String city, String altCityName, String fullName, String tricode, String teamId, String nickname, String urlName, String teamShortName, String confName, String divName) {
-        this.isNBAFranchise = isNBAFranchise;
-        this.isAllStar = isAllStar;
-        this.city = city;
-        this.altCityName = altCityName;
-        this.fullName = fullName;
-        this.tricode = tricode;
-        this.teamId = teamId;
-        this.nickname = nickname;
-        this.urlName = urlName;
-        this.teamShortName = teamShortName;
-        this.confName = confName;
-        this.divName = divName;
-    }
+    private boolean favorite;
 
     public Team(JSONObject jsonObject) {
         try {
@@ -47,6 +34,7 @@ public class Team {
             teamShortName = jsonObject.getString("teamShortName");
             confName = jsonObject.getString("confName");
             divName = jsonObject.getString("divName");
+            favorite = false;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -146,6 +134,14 @@ public class Team {
 
     public void setDivName(String divName) {
         this.divName = divName;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public String toString() {

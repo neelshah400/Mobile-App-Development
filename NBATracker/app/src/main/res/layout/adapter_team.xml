@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants"
     android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/id_imageTeam"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/id_textName"
@@ -19,30 +29,22 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/id_imageTeam"
         app:layout_constraintTop_toTopOf="@+id/id_imageTeam"
-        tools:text="Team Name" />
+        tools:text="Name" />
 
-    <ImageView
-        android:id="@+id/id_imageTeam"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/id_imageStar"
+    <CheckBox
+        android:id="@+id/id_checkStar"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
+        android:background="@drawable/custom_star"
+        android:button="@null"
+        android:checked="false"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_textName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/id_textName"
-        app:layout_constraintTop_toTopOf="@+id/id_textName"
-        app:srcCompat="@drawable/ic_star_border" />
+        app:layout_constraintTop_toTopOf="@+id/id_textName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

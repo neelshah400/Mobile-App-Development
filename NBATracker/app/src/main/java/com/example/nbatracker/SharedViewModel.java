@@ -58,6 +58,14 @@ public class SharedViewModel extends ViewModel {
         }
     }
 
+    public void setFavorite(int position, boolean favorite) {
+        ArrayList<Team> list = teams.getValue();
+        Team team = list.get(position);
+        team.setFavorite(favorite);
+        list.set(position, team);
+        teams.setValue(list);
+    }
+
     public void setText(String s) {
         text.setValue(s);
     }
