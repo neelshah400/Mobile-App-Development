@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +25,8 @@ public class TeamAdapter extends ArrayAdapter<Team> {
     List<Team> objects;
     Team team;
 
-    ImageView imageTeam;
+    ImageView imageTeam, imageStar;
     TextView textName;
-    ImageButton buttonStar;
 
     public TeamAdapter(@NonNull Context context, int resource, @NonNull List<Team> objects) {
         super(context, resource, objects);
@@ -44,16 +44,17 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
         imageTeam = adapterView.findViewById(R.id.id_imageTeam);
         textName = adapterView.findViewById(R.id.id_textName);
-        buttonStar = adapterView.findViewById(R.id.id_buttonStar);
+        imageStar = adapterView.findViewById(R.id.id_imageStar);
 
         team = objects.get(position);
 
-        Picasso.get().load("https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/" + team.getAbbreviation().toLowerCase() + ".png").into(imageTeam);
+        Picasso.get().load("https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/" + team.getTricode().toLowerCase() + ".png").into(imageTeam);
         textName.setText(team.getFullName());
-        buttonStar.setOnClickListener(new View.OnClickListener() {
+        imageStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buttonStar.setImageResource(R.drawable.ic_star);
+                imageStar.setImageResource(R.drawable.ic_star);
+                Toast.makeText(getContext(), team.getFullName(), Toast.LENGTH_SHORT).show();
             }
         });
 

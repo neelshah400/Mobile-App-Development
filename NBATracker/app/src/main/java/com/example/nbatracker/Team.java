@@ -5,52 +5,67 @@ import org.json.JSONObject;
 
 public class Team {
 
-    private int id;
-    private String abbreviation;
+    private boolean isNBAFranchise;
+    private boolean isAllStar;
     private String city;
-    private String conference;
-    private String division;
+    private String altCityName;
     private String fullName;
-    private String name;
+    private String tricode;
+    private String teamId;
+    private String nickname;
+    private String urlName;
+    private String teamShortName;
+    private String confName;
+    private String divName;
 
-    public Team(int id, String abbreviation, String city, String conference, String division, String fullName, String name) {
-        this.id = id;
-        this.abbreviation = abbreviation;
+    public Team(boolean isNBAFranchise, boolean isAllStar, String city, String altCityName, String fullName, String tricode, String teamId, String nickname, String urlName, String teamShortName, String confName, String divName) {
+        this.isNBAFranchise = isNBAFranchise;
+        this.isAllStar = isAllStar;
         this.city = city;
-        this.conference = conference;
-        this.division = division;
+        this.altCityName = altCityName;
         this.fullName = fullName;
-        this.name = name;
+        this.tricode = tricode;
+        this.teamId = teamId;
+        this.nickname = nickname;
+        this.urlName = urlName;
+        this.teamShortName = teamShortName;
+        this.confName = confName;
+        this.divName = divName;
     }
 
     public Team(JSONObject jsonObject) {
         try {
-            id = jsonObject.getInt("id");
-            abbreviation = jsonObject.getString("abbreviation");
+            isNBAFranchise = jsonObject.getBoolean("isNBAFranchise");
+            isAllStar = jsonObject.getBoolean("isAllStar");
             city = jsonObject.getString("city");
-            conference = jsonObject.getString("conference");
-            division = jsonObject.getString("division");
-            fullName = jsonObject.getString("full_name");
-            name = jsonObject.getString("name");
+            altCityName = jsonObject.getString("altCityName");
+            fullName = jsonObject.getString("fullName");
+            tricode = jsonObject.getString("tricode");
+            teamId = jsonObject.getString("teamId");
+            nickname = jsonObject.getString("nickname");
+            urlName = jsonObject.getString("urlName");
+            teamShortName = jsonObject.getString("teamShortName");
+            confName = jsonObject.getString("confName");
+            divName = jsonObject.getString("divName");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public int getId() {
-        return id;
+    public boolean isNBAFranchise() {
+        return isNBAFranchise;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNBAFranchise(boolean NBAFranchise) {
+        isNBAFranchise = NBAFranchise;
     }
 
-    public String getAbbreviation() {
-        return abbreviation;
+    public boolean isAllStar() {
+        return isAllStar;
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
+    public void setAllStar(boolean allStar) {
+        isAllStar = allStar;
     }
 
     public String getCity() {
@@ -61,20 +76,12 @@ public class Team {
         this.city = city;
     }
 
-    public String getConference() {
-        return conference;
+    public String getAltCityName() {
+        return altCityName;
     }
 
-    public void setConference(String conference) {
-        this.conference = conference;
-    }
-
-    public String getDivision() {
-        return division;
-    }
-
-    public void setDivision(String division) {
-        this.division = division;
+    public void setAltCityName(String altCityName) {
+        this.altCityName = altCityName;
     }
 
     public String getFullName() {
@@ -85,12 +92,60 @@ public class Team {
         this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
+    public String getTricode() {
+        return tricode;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTricode(String tricode) {
+        this.tricode = tricode;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getUrlName() {
+        return urlName;
+    }
+
+    public void setUrlName(String urlName) {
+        this.urlName = urlName;
+    }
+
+    public String getTeamShortName() {
+        return teamShortName;
+    }
+
+    public void setTeamShortName(String teamShortName) {
+        this.teamShortName = teamShortName;
+    }
+
+    public String getConfName() {
+        return confName;
+    }
+
+    public void setConfName(String confName) {
+        this.confName = confName;
+    }
+
+    public String getDivName() {
+        return divName;
+    }
+
+    public void setDivName(String divName) {
+        this.divName = divName;
     }
 
     public String toString() {

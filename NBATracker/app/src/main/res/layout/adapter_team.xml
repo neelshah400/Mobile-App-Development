@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:padding="8dp">
 
     <TextView
@@ -31,14 +32,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageButton
-        android:id="@+id/id_buttonStar"
+    <ImageView
+        android:id="@+id/id_imageStar"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/id_textName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
