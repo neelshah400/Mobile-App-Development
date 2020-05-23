@@ -17,22 +17,13 @@ import androidx.lifecycle.ViewModelProviders;
 public class GamesFragment extends Fragment {
 
     private SharedViewModel model;
-    TextView textView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_games, container, false);
         model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
 
-        textView = root.findViewById(R.id.textView);
 
-        model.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                textView.setText(s);
-                Log.d("SHAH", "success");
-            }
-        });
 
         return root;
 

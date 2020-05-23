@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,9 +28,8 @@ public class TeamAdapter extends ArrayAdapter<Team> {
     List<Team> objects;
     Team team;
 
-    ImageView imageTeam;
+    ImageView imageTeam, imageStar;
     TextView textName;
-    CheckBox checkStar;
 
     public TeamAdapter(@NonNull Context context, int resource, @NonNull List<Team> objects) {
         super(context, resource, objects);
@@ -47,11 +47,12 @@ public class TeamAdapter extends ArrayAdapter<Team> {
 
         imageTeam = adapterView.findViewById(R.id.id_imageTeam);
         textName = adapterView.findViewById(R.id.id_textName);
-        checkStar = adapterView.findViewById(R.id.id_checkStar);
+        imageStar = adapterView.findViewById(R.id.id_imageStar);
 
         team = objects.get(position);
         Picasso.get().load("https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/" + team.getTricode().toLowerCase() + ".png").into(imageTeam);
         textName.setText(team.getFullName());
+        imageStar.setImageResource(team.isFavorite() ? R.drawable.ic_star : R.drawable.ic_star_border);
 
         return adapterView;
 

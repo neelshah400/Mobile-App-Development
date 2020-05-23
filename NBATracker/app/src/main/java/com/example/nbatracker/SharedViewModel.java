@@ -14,13 +14,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SharedViewModel extends ViewModel {
 
     private MutableLiveData<JSONObject> links;
     private MutableLiveData<ArrayList<Team>> teams;
-    private MutableLiveData<String> text;
+    private MutableLiveData<ArrayList<Article>> articles;
 
     String endpoint;
 
@@ -29,7 +32,6 @@ public class SharedViewModel extends ViewModel {
         getLinks();
         teams = new MutableLiveData<ArrayList<Team>>();
         getTeams();
-        text = new MutableLiveData<String>();
     }
 
     public MutableLiveData<JSONObject> getLinks() {
@@ -58,20 +60,43 @@ public class SharedViewModel extends ViewModel {
         }
     }
 
+    public String getURL(String filter) {
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -7);
+        date = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String url = "https://newsapi.org/v2/everything?apiKey=e65803cd6d86460496379f4cabcec8b2&language=en&pageSize=100&sortBy=relevancy&from=" + dateFormat.format(date) + "&q=";
+        // code relating to query
+        return url;
+    }
+
+    public MutableLiveData<ArrayList<Article>> getArticles() {
+        return articles;
+    }
+
+    public MutableLiveData<ArrayList<Article>> getArticles(String filter) {
+        if (articles == null)
+            setArticles(getURL(filter));
+        return articles;
+    }
+
+    public void setArticles(String filter) {
+        endpoint = "newsapi";
+        try {
+            new AsyncThread().execute(getURL(filter));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setFavorite(int position, boolean favorite) {
         ArrayList<Team> list = teams.getValue();
         Team team = list.get(position);
         team.setFavorite(favorite);
         list.set(position, team);
         teams.setValue(list);
-    }
-
-    public void setText(String s) {
-        text.setValue(s);
-    }
-
-    public LiveData<String> getText() {
-        return text;
     }
 
     public class AsyncThread extends AsyncTask<String, Void, JSONObject> {
@@ -109,6 +134,9 @@ public class SharedViewModel extends ViewModel {
                             listTeams.add(new Team(jsonArray.getJSONObject(i)));
                     }
                     teams.setValue(listTeams);
+                }
+                else if (endpoint.equals("newsapi")) {
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

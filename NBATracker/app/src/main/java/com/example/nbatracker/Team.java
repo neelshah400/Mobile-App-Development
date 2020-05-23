@@ -145,7 +145,7 @@ public class Team {
     }
 
     public String toString() {
-        return fullName;
+        return fullName + (favorite ? "*" : "");
     }
 
 }

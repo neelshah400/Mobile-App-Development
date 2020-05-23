@@ -45,23 +45,23 @@ public class PreferencesFragment extends Fragment {
         model.getTeams().observe(getViewLifecycleOwner(), new Observer<ArrayList<Team>>() {
             @Override
             public void onChanged(ArrayList<Team> teams) {
+                int pos = listView.getFirstVisiblePosition();
+                View v = listView.getChildAt(0);
+                int offset = (v == null) ? 0 : v.getTop();
                 teamAdapter = new TeamAdapter(getContext(), R.layout.adapter_team, model.getTeams().getValue());
                 listView.setAdapter(teamAdapter);
+                listView.setSelectionFromTop(pos, offset);
             }
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("SHAH", position + "");
+                model.setFavorite(position, !model.getTeams().getValue().get(position).isFavorite());
             }
         });
 
         return root;
-
-    }
-
-    public void setup() {
 
     }
 

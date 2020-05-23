@@ -31,20 +31,17 @@
         app:layout_constraintTop_toTopOf="@+id/id_imageTeam"
         tools:text="Name" />
 
-    <CheckBox
-        android:id="@+id/id_checkStar"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+    <ImageView
+        android:id="@+id/id_imageStar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:background="@drawable/custom_star"
-        android:button="@null"
-        android:checked="false"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/id_textName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/id_textName"
-        app:layout_constraintTop_toTopOf="@+id/id_textName" />
+        app:layout_constraintTop_toTopOf="@+id/id_textName"
+        app:srcCompat="@drawable/ic_star_border" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
