@@ -6,14 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".NewsFragment">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/id_tabLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:tabIndicatorFullWidth="false"
+        app:tabMaxWidth="65dp"
+        app:tabMode="scrollable"
+        app:tabPadding="0dp" />
+
+    <ListView
+        android:id="@+id/id_listView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_tabLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

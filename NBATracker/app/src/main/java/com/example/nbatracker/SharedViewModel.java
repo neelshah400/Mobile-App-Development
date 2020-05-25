@@ -32,6 +32,7 @@ public class SharedViewModel extends ViewModel {
         getLinks();
         teams = new MutableLiveData<ArrayList<Team>>();
         getTeams();
+        articles = new MutableLiveData<ArrayList<Article>>();
     }
 
     public MutableLiveData<JSONObject> getLinks() {
@@ -60,7 +61,7 @@ public class SharedViewModel extends ViewModel {
         }
     }
 
-    public String getURL(String filter) {
+    public String getURL(int filter) {
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -68,7 +69,19 @@ public class SharedViewModel extends ViewModel {
         date = calendar.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String url = "https://newsapi.org/v2/everything?apiKey=e65803cd6d86460496379f4cabcec8b2&language=en&pageSize=100&sortBy=relevancy&from=" + dateFormat.format(date) + "&q=";
-        // code relating to query
+        if (filter == 0)
+            url += "nba";
+        else if (filter == 1) {
+            url += "nba%20and%20(";
+            for (Team team : teams.getValue()) {
+                if (team.isFavorite())
+                    url += "(" + team.getFullName().toLowerCase().replace(" ", "%20") + ")%20or%20";
+            }
+            url = url.substring(0, url.length() - 8) + ")";
+        }
+        else {
+            url += "nba%20and%20(" + teams.getValue().get(filter - 2).getFullName().replace(" ", "%20") + ")";
+        }
         return url;
     }
 
@@ -76,13 +89,13 @@ public class SharedViewModel extends ViewModel {
         return articles;
     }
 
-    public MutableLiveData<ArrayList<Article>> getArticles(String filter) {
+    public MutableLiveData<ArrayList<Article>> getArticles(int filter) {
         if (articles == null)
-            setArticles(getURL(filter));
+            setArticles(filter);
         return articles;
     }
 
-    public void setArticles(String filter) {
+    public void setArticles(int filter) {
         endpoint = "newsapi";
         try {
             new AsyncThread().execute(getURL(filter));

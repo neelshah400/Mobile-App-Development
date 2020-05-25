@@ -25,5 +25,6 @@
     <fragment
         android:id="@+id/navigation_preferences"
         android:name="com.example.nbatracker.PreferencesFragment"
-        android:label="Preferences" />
+        android:label="Preferences"
+        tools:layout="@layout/fragment_preferences" />
 </navigation>
