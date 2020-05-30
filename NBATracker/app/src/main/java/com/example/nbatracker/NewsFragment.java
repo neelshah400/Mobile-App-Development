@@ -1,5 +1,9 @@
 package com.example.nbatracker;
 
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -7,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -61,7 +66,6 @@ public class NewsFragment extends Fragment {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.d("SHAH", "yes" + tabLayout.getSelectedTabPosition());
                 model.setArticles(tabLayout.getSelectedTabPosition());
             }
 
@@ -79,13 +83,22 @@ public class NewsFragment extends Fragment {
         model.getArticles().observe(getViewLifecycleOwner(), new Observer<ArrayList<Article>>() {
             @Override
             public void onChanged(ArrayList<Article> articles) {
-                Log.d("SHAH", "test");
                 int pos = listView.getFirstVisiblePosition();
                 View v = listView.getChildAt(0);
                 int offset = (v == null) ? 0 : v.getTop();
                 articleAdapter = new ArticleAdapter(getContext(), R.layout.adapter_article, articles);
                 listView.setAdapter(articleAdapter);
                 listView.setSelectionFromTop(pos, offset);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Article article = model.getArticles().getValue().get(position);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(article.getUrl()));
+                startActivity(intent);
             }
         });
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
     Article article;
 
     TextView textTitle;
+    ImageView imageView;
 
     public ArticleAdapter(@NonNull Context context, int resource, @NonNull List<Article> objects) {
         super(context, resource, objects);
@@ -38,9 +40,11 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         View adapterView = layoutInflater.inflate(resource, null);
 
         textTitle = adapterView.findViewById(R.id.id_textTitle);
+        imageView = adapterView.findViewById(R.id.id_imageView);
 
         article = objects.get(position);
         textTitle.setText(article.getTitle());
+        Picasso.get().load(article.getUrlToImage()).into(imageView);
 
         return adapterView;
 

@@ -1,6 +1,7 @@
 package com.example.nbatracker;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -149,7 +150,11 @@ public class SharedViewModel extends ViewModel {
                     teams.setValue(listTeams);
                 }
                 else if (endpoint.equals("newsapi")) {
-
+                    JSONArray jsonArray = jsonObject.getJSONArray("articles");
+                    ArrayList<Article> listArticles = new ArrayList<Article>();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                        listArticles.add(new Article(jsonArray.getJSONObject(i)));
+                    articles.setValue(listArticles);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
