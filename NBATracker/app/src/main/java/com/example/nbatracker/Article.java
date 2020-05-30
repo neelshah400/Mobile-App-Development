@@ -2,6 +2,10 @@ package com.example.nbatracker;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class Article {
 
     private String sourceID;
@@ -18,12 +22,26 @@ public class Article {
         try {
             sourceID = jsonObject.getJSONObject("source").getString("id");
             sourceName = jsonObject.getJSONObject("source").getString("name");
+
             author = jsonObject.getString("author");
+            if (author.contains(","))
+                author = author.substring(0, author.indexOf(","));
+            if (author.equals("null"))
+                author = sourceName;
+
             title = jsonObject.getString("title");
             description = jsonObject.getString("description");
             url = jsonObject.getString("url");
             urlToImage = jsonObject.getString("urlToImage");
+
             publishedAt = jsonObject.getString("publishedAt");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = dateFormat.parse(publishedAt);
+            dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            dateFormat.setTimeZone(TimeZone.getDefault());
+            publishedAt = dateFormat.format(date);
+
             content = jsonObject.getString("content");
         } catch (Exception e) {
             e.printStackTrace();

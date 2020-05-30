@@ -12,11 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/id_imageView"
         app:layout_constraintEnd_toStartOf="@+id/id_imageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/id_imageView"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/id_textSource"
         tools:text="Title" />
 
     <ImageView
@@ -29,4 +27,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/id_textSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/id_imageView"
+        app:layout_constraintEnd_toStartOf="@+id/id_imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_imageView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Source" />
+
+    <TextView
+        android:id="@+id/id_textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/id_imageView"
+        app:layout_constraintEnd_toStartOf="@+id/id_imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_textTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Time" />
+
+    <TextView
+        android:id="@+id/id_textBullet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="•"
+        app:layout_constraintBottom_toBottomOf="@+id/id_textTime"
+        app:layout_constraintEnd_toStartOf="@+id/id_imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/id_textTime"
+        app:layout_constraintTop_toTopOf="@+id/id_textTime" />
+
+    <TextView
+        android:id="@+id/id_textAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/id_textBullet"
+        app:layout_constraintEnd_toStartOf="@+id/id_imageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/id_textBullet"
+        app:layout_constraintTop_toTopOf="@+id/id_textBullet"
+        tools:text="Author" />
 </androidx.constraintlayout.widget.ConstraintLayout>

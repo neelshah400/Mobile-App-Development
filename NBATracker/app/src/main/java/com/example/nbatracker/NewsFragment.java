@@ -11,16 +11,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.lifecycle.Observer;
@@ -45,6 +48,12 @@ public class NewsFragment extends Fragment {
     ListView listView;
     ArticleAdapter articleAdapter;
 
+    ConstraintLayout layout;
+    WebView webView;
+    ImageButton buttonBack, buttonShare;
+
+    Article article;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_news, container, false);
@@ -52,6 +61,14 @@ public class NewsFragment extends Fragment {
 
         tabLayout = root.findViewById(R.id.id_tabLayout);
         listView = root.findViewById(R.id.id_listView);
+
+        layout = root.findViewById(R.id.id_layout);
+        webView = root.findViewById(R.id.id_webView);
+        buttonBack = root.findViewById(R.id.id_buttonBack);
+        buttonShare = root.findViewById(R.id.id_buttonShare);
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
         tabLayout.addTab(tabLayout.newTab().setCustomView(getImage("https://icons.iconarchive.com/icons/blackvariant/button-ui-requests-13/512/NBA-icon.png")));
         tabLayout.addTab(tabLayout.newTab().setCustomView(getImage("https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png")));
@@ -95,10 +112,29 @@ public class NewsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Article article = model.getArticles().getValue().get(position);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(article.getUrl()));
-                startActivity(intent);
+                article = model.getArticles().getValue().get(position);
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(article.getUrl()));
+//                startActivity(intent);
+                webView.loadUrl(article.getUrl());
+                layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout.setVisibility(View.GONE);
+            }
+        });
+
+        buttonShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, article.getUrl());
+                startActivity(intent.createChooser(intent, "Share via"));
             }
         });
 

@@ -74,14 +74,14 @@ public class SharedViewModel extends ViewModel {
             url += "nba";
         else if (filter == 1) {
             url += "nba%20and%20(";
-            for (Team team : teams.getValue()) {
+            for (Team team : getTeams().getValue()) {
                 if (team.isFavorite())
                     url += "(" + team.getFullName().toLowerCase().replace(" ", "%20") + ")%20or%20";
             }
             url = url.substring(0, url.length() - 8) + ")";
         }
         else {
-            url += "nba%20and%20(" + teams.getValue().get(filter - 2).getFullName().replace(" ", "%20") + ")";
+            url += "nba%20and%20(" + getTeams().getValue().get(filter - 2).getFullName().replace(" ", "%20") + ")";
         }
         return url;
     }

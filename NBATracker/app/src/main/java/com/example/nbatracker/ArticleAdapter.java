@@ -22,7 +22,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
     List<Article> objects;
     Article article;
 
-    TextView textTitle;
+    TextView textTitle, textSource, textTime, textAuthor;
     ImageView imageView;
 
     public ArticleAdapter(@NonNull Context context, int resource, @NonNull List<Article> objects) {
@@ -40,10 +40,16 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         View adapterView = layoutInflater.inflate(resource, null);
 
         textTitle = adapterView.findViewById(R.id.id_textTitle);
+        textSource = adapterView.findViewById(R.id.id_textSource);
+        textTime = adapterView.findViewById(R.id.id_textTime);
+        textAuthor = adapterView.findViewById(R.id.id_textAuthor);
         imageView = adapterView.findViewById(R.id.id_imageView);
 
         article = objects.get(position);
         textTitle.setText(article.getTitle());
+        textSource.setText(article.getSourceName());
+        textTime.setText(article.getPublishedAt());
+        textAuthor.setText(article.getAuthor());
         Picasso.get().load(article.getUrlToImage()).into(imageView);
 
         return adapterView;
