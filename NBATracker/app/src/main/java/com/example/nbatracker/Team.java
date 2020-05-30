@@ -1,6 +1,7 @@
 package com.example.nbatracker;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Team {
@@ -11,7 +12,7 @@ public class Team {
     private String altCityName;
     private String fullName;
     private String tricode;
-    private String teamId;
+    private int teamId;
     private String nickname;
     private String urlName;
     private String teamShortName;
@@ -19,6 +20,13 @@ public class Team {
     private String divName;
 
     private boolean favorite;
+
+    private int wins;
+    private int losses;
+    private int gamesBehind;
+    private int confRank;
+    private int last10_wins;
+    private int last10_losses;
 
     public Team(JSONObject jsonObject) {
         try {
@@ -28,13 +36,26 @@ public class Team {
             altCityName = jsonObject.getString("altCityName");
             fullName = jsonObject.getString("fullName");
             tricode = jsonObject.getString("tricode");
-            teamId = jsonObject.getString("teamId");
+            teamId = Integer.parseInt(jsonObject.getString("teamId"));
             nickname = jsonObject.getString("nickname");
             urlName = jsonObject.getString("urlName");
             teamShortName = jsonObject.getString("teamShortName");
             confName = jsonObject.getString("confName");
             divName = jsonObject.getString("divName");
             favorite = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addHistory(JSONObject jsonObject) {
+        try {
+            wins = Integer.parseInt(jsonObject.getString("win"));
+            losses = Integer.parseInt(jsonObject.getString("loss"));
+            gamesBehind = Integer.parseInt(jsonObject.getString("gamesBehind"));
+            confRank = Integer.parseInt(jsonObject.getString("confRank"));
+            last10_wins = Integer.parseInt(jsonObject.getString("lastTenWin"));
+            last10_losses = Integer.parseInt(jsonObject.getString("lastTenLoss"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,11 +109,11 @@ public class Team {
         this.tricode = tricode;
     }
 
-    public String getTeamId() {
+    public int getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(String teamId) {
+    public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
 
@@ -142,6 +163,54 @@ public class Team {
 
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public int getGamesBehind() {
+        return gamesBehind;
+    }
+
+    public void setGamesBehind(int gamesBehind) {
+        this.gamesBehind = gamesBehind;
+    }
+
+    public int getConfRank() {
+        return confRank;
+    }
+
+    public void setConfRank(int confRank) {
+        this.confRank = confRank;
+    }
+
+    public int getLast10_wins() {
+        return last10_wins;
+    }
+
+    public void setLast10_wins(int last10_wins) {
+        this.last10_wins = last10_wins;
+    }
+
+    public int getLast10_losses() {
+        return last10_losses;
+    }
+
+    public void setLast10_losses(int last10_losses) {
+        this.last10_losses = last10_losses;
     }
 
     public String toString() {

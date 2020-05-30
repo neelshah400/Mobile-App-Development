@@ -49,7 +49,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/id_buttonBack">
+            app:layout_constraintTop_toBottomOf="@+id/id_buttonOpen">
 
         </WebView>
 
@@ -58,23 +58,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_arrow_back_24"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/id_webView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/id_buttonOpen" />
 
         <ImageButton
             android:id="@+id/id_buttonShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_share_24"
-            app:layout_constraintBottom_toBottomOf="@+id/id_buttonBack"
+            app:layout_constraintBottom_toTopOf="@+id/id_webView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/id_buttonBack"
-            app:layout_constraintTop_toTopOf="@+id/id_buttonBack" />
+            app:layout_constraintTop_toTopOf="@+id/id_buttonOpen" />
+
+        <Button
+            android:id="@+id/id_buttonOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open in Browser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/id_buttonShare"
+            app:layout_constraintStart_toEndOf="@+id/id_buttonBack"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

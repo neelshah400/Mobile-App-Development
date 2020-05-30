@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class SharedViewModel extends ViewModel {
 
@@ -54,8 +55,8 @@ public class SharedViewModel extends ViewModel {
     }
 
     public void setTeams() {
-        endpoint = "teams";
         try {
+            endpoint = "teams";
             new AsyncThread().execute("http://data.nba.net" + getLinks().getValue().getString("teams"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,8 +82,9 @@ public class SharedViewModel extends ViewModel {
             url = url.substring(0, url.length() - 8) + ")";
         }
         else {
-            url += "nba%20and%20(" + getTeams().getValue().get(filter - 2).getFullName().replace(" ", "%20") + ")";
+            url += "nba%20and%20(" + getTeams().getValue().get(filter - 2).getFullName().toLowerCase().replace(" ", "%20") + ")";
         }
+        Log.d("SHAH", url);
         return url;
     }
 
