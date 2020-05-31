@@ -25,6 +25,8 @@ public class SharedViewModel extends ViewModel {
 
     private MutableLiveData<JSONObject> links;
     private MutableLiveData<ArrayList<Team>> teams;
+    private MutableLiveData<ArrayList<Record>> standingsEast;
+    private MutableLiveData<ArrayList<Record>> standingsWest;
     private MutableLiveData<ArrayList<Article>> articles;
 
     String endpoint;
@@ -34,6 +36,10 @@ public class SharedViewModel extends ViewModel {
         getLinks();
         teams = new MutableLiveData<ArrayList<Team>>();
         getTeams();
+        standingsEast = new MutableLiveData<ArrayList<Record>>();
+        getStandingsEast();
+        standingsWest = new MutableLiveData<ArrayList<Record>>();
+        getStandingsWest();
         articles = new MutableLiveData<ArrayList<Article>>();
     }
 
@@ -55,9 +61,39 @@ public class SharedViewModel extends ViewModel {
     }
 
     public void setTeams() {
+        endpoint = "teams";
         try {
-            endpoint = "teams";
             new AsyncThread().execute("http://data.nba.net" + getLinks().getValue().getString("teams"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public MutableLiveData<ArrayList<Record>> getStandingsEast() {
+        if (standingsEast.getValue() == null)
+            setStandingsEast();
+        return standingsEast;
+    }
+
+    public void setStandingsEast() {
+        endpoint = "standingsEast";
+        try {
+            new AsyncThread().execute("http://data.nba.net" + getLinks().getValue().getString("leagueConfStandings"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public MutableLiveData<ArrayList<Record>> getStandingsWest() {
+        if (standingsWest.getValue() == null)
+            setStandingsWest();
+        return standingsWest;
+    }
+
+    public void setStandingsWest() {
+        endpoint = "standingsWest";
+        try {
+            new AsyncThread().execute("http://data.nba.net" + getLinks().getValue().getString("leagueConfStandings"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,6 +186,20 @@ public class SharedViewModel extends ViewModel {
                             listTeams.add(new Team(jsonArray.getJSONObject(i)));
                     }
                     teams.setValue(listTeams);
+                }
+                else if (endpoint.equals("standingsEast")) {
+                    JSONArray jsonArray = jsonObject.getJSONObject("league").getJSONObject("standard").getJSONObject("conference").getJSONArray("east");
+                    ArrayList<Record> listStandingsEast = new ArrayList<Record>();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                        listStandingsEast.add(new Record(jsonArray.getJSONObject(i)));
+                    standingsEast.setValue(listStandingsEast);
+                }
+                else if (endpoint.equals("standingsWest")) {
+                    JSONArray jsonArray = jsonObject.getJSONObject("league").getJSONObject("standard").getJSONObject("conference").getJSONArray("west");
+                    ArrayList<Record> listStandingsWest = new ArrayList<Record>();
+                    for (int i = 0; i < jsonArray.length(); i++)
+                        listStandingsWest.add(new Record(jsonArray.getJSONObject(i)));
+                    standingsWest.setValue(listStandingsWest);
                 }
                 else if (endpoint.equals("newsapi")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("articles");

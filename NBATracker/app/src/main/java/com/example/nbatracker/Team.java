@@ -165,54 +165,6 @@ public class Team {
         this.favorite = favorite;
     }
 
-    public int getWins() {
-        return wins;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
-    public int getLosses() {
-        return losses;
-    }
-
-    public void setLosses(int losses) {
-        this.losses = losses;
-    }
-
-    public int getGamesBehind() {
-        return gamesBehind;
-    }
-
-    public void setGamesBehind(int gamesBehind) {
-        this.gamesBehind = gamesBehind;
-    }
-
-    public int getConfRank() {
-        return confRank;
-    }
-
-    public void setConfRank(int confRank) {
-        this.confRank = confRank;
-    }
-
-    public int getLast10_wins() {
-        return last10_wins;
-    }
-
-    public void setLast10_wins(int last10_wins) {
-        this.last10_wins = last10_wins;
-    }
-
-    public int getLast10_losses() {
-        return last10_losses;
-    }
-
-    public void setLast10_losses(int last10_losses) {
-        this.last10_losses = last10_losses;
-    }
-
     public String toString() {
         return fullName + (favorite ? "*" : "");
     }

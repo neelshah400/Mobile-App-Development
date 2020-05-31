@@ -4,50 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StandingsFragment">
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/id_tabLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/id_tabEast"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="East" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/id_tabWest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="West" />
-
-    </com.google.android.material.tabs.TabLayout>
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/id_textRank"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="#"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_tabLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="#" />
 
     <TextView
         android:id="@+id/id_textTeam"
@@ -56,14 +26,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="Team"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/id_textRank"
         app:layout_constraintEnd_toStartOf="@+id/id_textWins"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/id_textRank"
-        app:layout_constraintTop_toTopOf="@+id/id_textRank" />
+        app:layout_constraintStart_toEndOf="@+id/id_imageTeam"
+        app:layout_constraintTop_toTopOf="@+id/id_textRank"
+        tools:text="Team" />
 
     <TextView
         android:id="@+id/id_textWins"
@@ -72,14 +41,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="W"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/id_textRank"
         app:layout_constraintEnd_toStartOf="@+id/id_textLosses"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/id_textRank"
-        app:layout_constraintTop_toTopOf="@+id/id_textRank" />
+        app:layout_constraintTop_toTopOf="@+id/id_textRank"
+        tools:text="W" />
 
     <TextView
         android:id="@+id/id_textLosses"
@@ -88,14 +56,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="L"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/id_textRank"
         app:layout_constraintEnd_toStartOf="@+id/id_textGamesBehind"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/id_textRank"
-        app:layout_constraintTop_toTopOf="@+id/id_textRank" />
+        app:layout_constraintTop_toTopOf="@+id/id_textRank"
+        tools:text="L" />
 
     <TextView
         android:id="@+id/id_textGamesBehind"
@@ -104,40 +71,38 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="GB"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/id_textRank"
         app:layout_constraintEnd_toStartOf="@+id/id_textL10"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/id_textRank"
-        app:layout_constraintTop_toTopOf="@+id/id_textRank" />
+        app:layout_constraintTop_toTopOf="@+id/id_textRank"
+        tools:text="GB" />
 
     <TextView
         android:id="@+id/id_textL10"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="L10"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/id_textRank"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/id_textRank"
-        app:layout_constraintTop_toTopOf="@+id/id_textRank" />
+        app:layout_constraintTop_toTopOf="@+id/id_textRank"
+        tools:text="L10" />
 
-    <ListView
-        android:id="@+id/id_listView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_textRank">
-
-    </ListView>
-
+    <ImageView
+        android:id="@+id/id_imageTeam"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/id_textRank"
+        app:layout_constraintEnd_toStartOf="@+id/id_textWins"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/id_textRank"
+        app:layout_constraintTop_toTopOf="@+id/id_textRank"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
