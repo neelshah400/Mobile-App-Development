@@ -57,7 +57,6 @@ public class StandingsFragment extends Fragment {
                     model.setStandingsEast();
                 else
                     model.setStandingsWest();
-                Log.d("SHAH", tabLayout.getSelectedTabPosition() + "");
             }
 
             @Override

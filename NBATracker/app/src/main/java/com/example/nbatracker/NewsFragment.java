@@ -106,7 +106,6 @@ public class NewsFragment extends Fragment {
         model.getArticles().observe(getViewLifecycleOwner(), new Observer<ArrayList<Article>>() {
             @Override
             public void onChanged(ArrayList<Article> articles) {
-                Log.d("SHAH", "test");
                 int pos = listView.getFirstVisiblePosition();
                 View v = listView.getChildAt(0);
                 int offset = (v == null) ? 0 : v.getTop();
