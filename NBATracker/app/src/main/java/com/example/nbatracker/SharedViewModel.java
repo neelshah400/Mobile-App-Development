@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -28,19 +29,17 @@ public class SharedViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Record>> standingsEast;
     private MutableLiveData<ArrayList<Record>> standingsWest;
     private MutableLiveData<ArrayList<Article>> articles;
+    private MutableLiveData<ArrayList<Game>> games;
 
     String endpoint;
 
     public SharedViewModel() {
         links = new MutableLiveData<JSONObject>();
-        getLinks();
         teams = new MutableLiveData<ArrayList<Team>>();
-        getTeams();
         standingsEast = new MutableLiveData<ArrayList<Record>>();
-        getStandingsEast();
         standingsWest = new MutableLiveData<ArrayList<Record>>();
-        getStandingsWest();
         articles = new MutableLiveData<ArrayList<Article>>();
+        games = new MutableLiveData<ArrayList<Game>>();
     }
 
     public MutableLiveData<JSONObject> getLinks() {
@@ -67,6 +66,14 @@ public class SharedViewModel extends ViewModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setFavorite(int position, boolean favorite) {
+        ArrayList<Team> list = teams.getValue();
+        Team team = list.get(position);
+        team.setFavorite(favorite);
+        list.set(position, team);
+        teams.setValue(list);
     }
 
     public MutableLiveData<ArrayList<Record>> getStandingsEast() {
@@ -128,7 +135,7 @@ public class SharedViewModel extends ViewModel {
     }
 
     public MutableLiveData<ArrayList<Article>> getArticles(int filter) {
-        if (articles == null)
+        if (articles.getValue() == null)
             setArticles(filter);
         return articles;
     }
@@ -142,12 +149,23 @@ public class SharedViewModel extends ViewModel {
         }
     }
 
-    public void setFavorite(int position, boolean favorite) {
-        ArrayList<Team> list = teams.getValue();
-        Team team = list.get(position);
-        team.setFavorite(favorite);
-        list.set(position, team);
-        teams.setValue(list);
+    public MutableLiveData<ArrayList<Game>> getGames() {
+        return games;
+    }
+
+    public MutableLiveData<ArrayList<Game>> getGames(String date) {
+        if (games.getValue() == null)
+            setGames(date);
+        return games;
+    }
+
+    public void setGames(String date) {
+        endpoint = "scoreboard";
+        try {
+            new AsyncThread().execute("http://data.nba.net" + getLinks().getValue().getString("scoreboard").replace("{{gameDate}}", date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public class AsyncThread extends AsyncTask<String, Void, JSONObject> {
@@ -176,7 +194,7 @@ public class SharedViewModel extends ViewModel {
         protected void onPostExecute(JSONObject jsonObject) {
             try {
                 if (endpoint.equals("today"))
-                    links.setValue(jsonObject.getJSONObject("links"));
+                    links.postValue(jsonObject.getJSONObject("links"));
                 else if (endpoint.equals("teams")) {
                     JSONArray jsonArray = jsonObject.getJSONObject("league").getJSONArray("standard");
                     ArrayList<Team> listTeams = new ArrayList<Team>();
@@ -184,28 +202,38 @@ public class SharedViewModel extends ViewModel {
                         if (jsonArray.getJSONObject(i).getBoolean("isNBAFranchise"))
                             listTeams.add(new Team(jsonArray.getJSONObject(i)));
                     }
-                    teams.setValue(listTeams);
+                    teams.postValue(listTeams);
                 }
                 else if (endpoint.equals("standingsEast")) {
                     JSONArray jsonArray = jsonObject.getJSONObject("league").getJSONObject("standard").getJSONObject("conference").getJSONArray("east");
                     ArrayList<Record> listStandingsEast = new ArrayList<Record>();
                     for (int i = 0; i < jsonArray.length(); i++)
                         listStandingsEast.add(new Record(jsonArray.getJSONObject(i)));
-                    standingsEast.setValue(listStandingsEast);
+                    standingsEast.postValue(listStandingsEast);
                 }
                 else if (endpoint.equals("standingsWest")) {
                     JSONArray jsonArray = jsonObject.getJSONObject("league").getJSONObject("standard").getJSONObject("conference").getJSONArray("west");
                     ArrayList<Record> listStandingsWest = new ArrayList<Record>();
                     for (int i = 0; i < jsonArray.length(); i++)
                         listStandingsWest.add(new Record(jsonArray.getJSONObject(i)));
-                    standingsWest.setValue(listStandingsWest);
+                    standingsWest.postValue(listStandingsWest);
                 }
                 else if (endpoint.equals("newsapi")) {
                     JSONArray jsonArray = jsonObject.getJSONArray("articles");
                     ArrayList<Article> listArticles = new ArrayList<Article>();
                     for (int i = 0; i < jsonArray.length(); i++)
                         listArticles.add(new Article(jsonArray.getJSONObject(i)));
-                    articles.setValue(listArticles);
+                    articles.postValue(listArticles);
+                }
+                else if (endpoint.equals("scoreboard")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("games");
+                    ArrayList<Game> listGames = new ArrayList<Game>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        Log.d("TEST", jsonArray.getJSONObject(i).toString(2));
+                        listGames.add(new Game(jsonArray.getJSONObject(i)));
+                    }
+                    games.postValue(listGames);
+                    Log.d("SHAH", games.getValue() + "");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

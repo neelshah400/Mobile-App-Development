@@ -1,10 +1,15 @@
 package com.example.nbatracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Team {
+import java.io.Serializable;
+
+public class Team implements Serializable {
 
     private boolean isNBAFranchise;
     private boolean isAllStar;

@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
@@ -74,12 +75,15 @@ public class NewsFragment extends Fragment {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.setWebChromeClient(new WebChromeClient());
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setDomStorageEnabled(true);
 
         tabLayout.addTab(tabLayout.newTab().setCustomView(getImage("https://icons.iconarchive.com/icons/blackvariant/button-ui-requests-13/512/NBA-icon.png")));
         tabLayout.addTab(tabLayout.newTab().setCustomView(getImage("https://iconsplace.com/wp-content/uploads/_icons/ffa500/256/png/rating-star-icon-11-256.png")));
         model.getTeams().observe(getViewLifecycleOwner(), new Observer<ArrayList<Team>>() {
             @Override
             public void onChanged(ArrayList<Team> teams) {
+                Log.d("SHAH", "test");
                 for (Team team : teams)
                     tabLayout.addTab(tabLayout.newTab().setCustomView(getImage("https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/" + team.getTricode().toLowerCase() + ".png")));
             }

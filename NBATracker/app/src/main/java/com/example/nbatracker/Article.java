@@ -120,4 +120,8 @@ public class Article {
         this.content = content;
     }
 
+    public String toString() {
+        return title;
+    }
+
 }
