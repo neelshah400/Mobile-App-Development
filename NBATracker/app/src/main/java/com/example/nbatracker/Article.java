@@ -28,6 +28,7 @@ public class Article {
                 author = author.substring(0, author.indexOf(","));
             if (author.equals("null"))
                 author = sourceName;
+            author = author.trim().replaceAll("\\s{2,}", " ");
 
             title = jsonObject.getString("title");
             description = jsonObject.getString("description");
