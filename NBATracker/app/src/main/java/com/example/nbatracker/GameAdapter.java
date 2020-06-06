@@ -63,6 +63,13 @@ public class GameAdapter extends ArrayAdapter<Game> {
         else
             textStatus.setText("Final");
 
+        int h = Integer.parseInt(game.getHScore());
+        int v = Integer.parseInt(game.getVScore());
+        if (h > v)
+            textScoreH.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
+        else if (v > h)
+            textScoreV.setTextColor(getContext().getResources().getColor(R.color.colorAccent));
+
         return adapterView;
 
     }
