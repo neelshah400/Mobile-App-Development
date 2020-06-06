@@ -159,6 +159,7 @@ public class SharedViewModel extends AndroidViewModel {
         else {
             url += "nba%20and%20(" + getTeams().getValue().get(filter - 2).getFullName().toLowerCase().replace(" ", "%20") + ")";
         }
+        Log.d("SHAH", url);
         return url;
     }
 
