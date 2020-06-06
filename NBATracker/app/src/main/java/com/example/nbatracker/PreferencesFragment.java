@@ -1,5 +1,7 @@
 package com.example.nbatracker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PreferencesFragment extends Fragment {
 

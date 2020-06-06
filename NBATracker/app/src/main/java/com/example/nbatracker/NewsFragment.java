@@ -83,7 +83,6 @@ public class NewsFragment extends Fragment {
         model.getTeams().observe(getViewLifecycleOwner(), new Observer<ArrayList<Team>>() {
             @Override
             public void onChanged(ArrayList<Team> teams) {
-                Log.d("SHAH", "test");
                 for (Team team : teams)
                     tabLayout.addTab(tabLayout.newTab().setCustomView(getImage("https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/" + team.getTricode().toLowerCase() + ".png")));
             }

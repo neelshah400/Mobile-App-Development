@@ -21,8 +21,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("SHAH", (savedInstanceState == null) + "");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -42,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
         model = ViewModelProviders.of(this).get(SharedViewModel.class);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences preferences = getSharedPreferences("KEY_preferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet("KEY_favorites", model.getFavorites());
+        editor.apply();
     }
 
 }

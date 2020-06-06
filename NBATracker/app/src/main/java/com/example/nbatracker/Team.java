@@ -1,7 +1,10 @@
 package com.example.nbatracker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,7 +12,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-public class Team implements Serializable {
+public class Team {
 
     private boolean isNBAFranchise;
     private boolean isAllStar;
@@ -26,14 +29,7 @@ public class Team implements Serializable {
 
     private boolean favorite;
 
-    private int wins;
-    private int losses;
-    private int gamesBehind;
-    private int confRank;
-    private int last10_wins;
-    private int last10_losses;
-
-    public Team(JSONObject jsonObject) {
+    public Team(JSONObject jsonObject, boolean isFavorite) {
         try {
             isNBAFranchise = jsonObject.getBoolean("isNBAFranchise");
             isAllStar = jsonObject.getBoolean("isAllStar");
@@ -47,20 +43,7 @@ public class Team implements Serializable {
             teamShortName = jsonObject.getString("teamShortName");
             confName = jsonObject.getString("confName");
             divName = jsonObject.getString("divName");
-            favorite = false;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addHistory(JSONObject jsonObject) {
-        try {
-            wins = Integer.parseInt(jsonObject.getString("win"));
-            losses = Integer.parseInt(jsonObject.getString("loss"));
-            gamesBehind = Integer.parseInt(jsonObject.getString("gamesBehind"));
-            confRank = Integer.parseInt(jsonObject.getString("confRank"));
-            last10_wins = Integer.parseInt(jsonObject.getString("lastTenWin"));
-            last10_losses = Integer.parseInt(jsonObject.getString("lastTenLoss"));
+            favorite = isFavorite;
         } catch (Exception e) {
             e.printStackTrace();
         }

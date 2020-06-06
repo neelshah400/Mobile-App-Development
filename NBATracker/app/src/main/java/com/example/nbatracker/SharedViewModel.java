@@ -1,8 +1,13 @@
 package com.example.nbatracker;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -21,8 +26,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-public class SharedViewModel extends ViewModel {
+public class SharedViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> links;
     private MutableLiveData<ArrayList<Team>> teams;
@@ -33,7 +40,8 @@ public class SharedViewModel extends ViewModel {
 
     String endpoint;
 
-    public SharedViewModel() {
+    public SharedViewModel(Application application) {
+        super(application);
         links = new MutableLiveData<JSONObject>();
         teams = new MutableLiveData<ArrayList<Team>>();
         standingsEast = new MutableLiveData<ArrayList<Record>>();
@@ -66,6 +74,30 @@ public class SharedViewModel extends ViewModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public HashSet<String> getFavorites() {
+        HashSet<String> set = new HashSet<String>();
+        ArrayList<Team> listTeams = getTeams().getValue();
+        for (int i = 0; i < listTeams.size(); i++) {
+            Team team = listTeams.get(i);
+            if (team.isFavorite())
+                set.add(i + "");
+        }
+        Log.d("SHAH", set + "");
+        Log.d("SHAH", teams.getValue() + "");
+        return set;
+    }
+
+    public void setFavorites(Set<String> favorites) {
+        ArrayList<Team> listTeams = getTeams().getValue();
+        for (int i = 0; i < listTeams.size(); i++) {
+            Team team = listTeams.get(i);
+            if (favorites.contains(i))
+                team.setFavorite(true);
+            listTeams.set(i, team);
+        }
+        teams.setValue(listTeams);
     }
 
     public void setFavorite(int position, boolean favorite) {
@@ -196,11 +228,20 @@ public class SharedViewModel extends ViewModel {
                 if (endpoint.equals("today"))
                     links.postValue(jsonObject.getJSONObject("links"));
                 else if (endpoint.equals("teams")) {
+                    SharedPreferences preferences = getApplication().getSharedPreferences("KEY_preferences", Context.MODE_PRIVATE);
+                    HashSet<String> favorites = (HashSet<String>) preferences.getStringSet("KEY_favorites", null);
                     JSONArray jsonArray = jsonObject.getJSONObject("league").getJSONArray("standard");
                     ArrayList<Team> listTeams = new ArrayList<Team>();
                     for (int i = 0; i < jsonArray.length(); i++) {
                         if (jsonArray.getJSONObject(i).getBoolean("isNBAFranchise"))
-                            listTeams.add(new Team(jsonArray.getJSONObject(i)));
+                            listTeams.add(new Team(jsonArray.getJSONObject(i), false));
+                    }
+                    if (favorites != null && !favorites.isEmpty()) {
+                        for (int i = 0; i < listTeams.size(); i++) {
+                            Team team = listTeams.get(i);
+                            team.setFavorite(favorites.contains(i + ""));
+                            listTeams.set(i, team);
+                        }
                     }
                     teams.postValue(listTeams);
                 }
